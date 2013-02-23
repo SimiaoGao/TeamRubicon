@@ -24,7 +24,7 @@
         INSERT INTO active (warehouse, item, amount, time) VALUES (1, 1, 1000, '10:00');
         
         INSERT INTO person (person, name, role, phone) VALUES (1, 'Steve John', '8383231234');
-        INSERT INTO lent (person, amount, time) VALUES (1, 10, '10:00');        
+        INSERT INTO lent (person, amount, time) VALUES (1, 10, '10:00');
 	"</string>
 
 </resources>
