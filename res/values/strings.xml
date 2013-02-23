@@ -6,5 +6,25 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
+    
+    
+    <string name="smsAutoResponder_onCreate">"
+        PRAGMA foreign_keys=ON;
+        CREATE TABLE warehouses ( _id INTEGER PRIMARY KEY, name TEXT NOT NULL, location TEXT NOT NULL);
+        CREATE TABLE items ( _id INTEGER PRIMARY KEY, name TEXT NOT NULL, condition TEXT NOT NULL);
+ 		CREATE TABLE inactive (warehouse INTEGER, item INTEGER, amount INTEGER, FOREIGN KEY(warehouse) REFERENCES warehouses(_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(item) REFERENCES items(_id) ON DELETE CASCADE ON UPDATE CASCADE);
+ 		CREATE TABLE active (warehouse INTEGER, item INTEGER, amount INTEGER, time TEXT NOT NULL, FOREIGN KEY(warehouse) REFERENCES warehouses(_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(item) REFERENCES items(_id) ON DELETE CASCADE ON UPDATE CASCADE);
+ 		
+ 		CREATE TABLE persons ( _id INTEGER PRIMARY KEY, name TEXT NOT NULL, role TEXT NOT NULL, phone TEXT UNIQUE);
+		CREATE TABLE lent (person INTEGER, amount INTEGER NOT NULL, time TEXT NOT NULL, FOREIGN KEY(person) REFERENCES persons(_id) ON DELETE CASCADE ON UPDATE CASCADE);
+		
+        INSERT INTO warehouses (_id, name, location) VALUES (1, 'PennWare10', '48 Broad St, Philadelphia, PA 12934');
+        INSERT INTO items (_id, name, condition) VALUES (1, 'Hammer','');
+        INSERT INTO inactive (warehouse, item, amount) VALUES (1, 1, 1000);
+        INSERT INTO active (warehouse, item, amount, time) VALUES (1, 1, 1000, '10:00');
+        
+        INSERT INTO person (person, name, role, phone) VALUES (1, 'Steve John', '8383231234');
+        INSERT INTO lent (person, amount, time) VALUES (1, 10, '10:00');        
+	"</string>
 
 </resources>
