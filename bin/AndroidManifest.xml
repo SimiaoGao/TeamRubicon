@@ -20,6 +20,12 @@
         <activity
             android:name="org.teamrubiconusa.teamrubicon.TeamRubicon"
             android:label="@string/app_name" >
+        </activity>
+    
+        <activity
+            android:name="org.teamrubiconusa.teamrubicon.Splash"
+            android:label="@string/app_name"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
