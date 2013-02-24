@@ -56,7 +56,7 @@ public class ActiveDao {
 		return calendar;
 	}
 	
-	private List<Active> getAllActives() {
+	public List<Active> getAllActives() {
 		return actives;
 	}
 }

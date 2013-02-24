@@ -1,8 +1,7 @@
 package org.teamrubiconusa.teamrubicon;
 
 import org.teamrubiconusa.teamrubicon.REST.RESTfulRequest;
-import org.teamrubiconusa.teamrubicon.dao.WarehouseDao;
-import org.teamrubiconusa.teamrubicon.model.Warehouse;
+import org.teamrubiconusa.teamrubicon.dao.ActiveDao;
 
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -39,9 +38,9 @@ public class TeamRubicon extends FragmentActivity {
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
 		
-		WarehouseDao.getInstance().setContext(this.getApplicationContext());
-		WarehouseDao wd =  WarehouseDao.getInstance();
-		Toast.makeText(this, wd.getWarehouseById(1).toString(), Toast.LENGTH_LONG).show();
+		ActiveDao.getInstance().setContext(this.getApplicationContext());
+		ActiveDao wd =  ActiveDao.getInstance();
+		Toast.makeText(this, wd.getAllActives().get(0).toString(), Toast.LENGTH_LONG).show();
 	}
 	
 	@Override

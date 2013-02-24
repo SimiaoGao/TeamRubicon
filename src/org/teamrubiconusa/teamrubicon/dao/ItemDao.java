@@ -43,6 +43,6 @@ public class ItemDao {
 	}
 	
 	public Item getItemById(int id) {
-		return items.get(Integer.toString(id));
+		return items.get(new Integer(id));
 	}
 }

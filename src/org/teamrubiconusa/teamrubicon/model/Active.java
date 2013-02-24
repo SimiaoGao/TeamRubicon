@@ -70,6 +70,6 @@ public class Active {
 
 	@Override
 	public String toString() {
-		return "Active [warehouse=" + warehouse + ", item=" + item + ", time=" + time + "]";
+		return "Active [warehouse=" + warehouse + ", item=" + item + ", time=" + time.getTime().toString() + "]";
 	}
 }
