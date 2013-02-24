@@ -1,7 +1,6 @@
 package org.teamrubiconusa.teamrubicon;
 
 import org.teamrubiconusa.teamrubicon.REST.RESTfulRequest;
-import com.viewpagerindicator.CirclePageIndicator;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -34,15 +33,6 @@ public class TeamRubicon extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-		
-
-	    //Bind the title indicator to the adapter
-	    CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
-	    indicator.setViewPager(mViewPager);
-	    
-	    indicator.setBackgroundColor(0xffffffff);
-        indicator.setStrokeColor(0xff888888);
-        indicator.setFillColor(0xff888888);
 
 	}
 	
