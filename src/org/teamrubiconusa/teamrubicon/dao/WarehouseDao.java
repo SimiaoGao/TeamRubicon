@@ -49,8 +49,11 @@ public class WarehouseDao {
 	}
 	
 	public boolean addWarehouse(Warehouse warehouse) {
-		db.addWarehouse(warehouse.getId(), warehouse.getName(), warehouse.getLocation());
-		populateMap();
-		return true;
+		if (warehouses.get(warehouse.getId()) == null) {
+			db.addWarehouse(warehouse.getId(), warehouse.getName(), warehouse.getLocation());
+			warehouses.put(warehouse.getId(), warehouse);
+			return true;
+		}
+		return false;
 	}
 }

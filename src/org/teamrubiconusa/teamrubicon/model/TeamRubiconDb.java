@@ -85,7 +85,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 
 	public static class ItemsCursor extends SQLiteCursor {
 		/** The query for this cursor */
-		private static final String QUERY = "SELECT _id, type, condition FROM items";
+		private static final String QUERY = "SELECT _id, type, condition, warehouse FROM items";
 
 		/** Cursor constructor */
 		ItemsCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
@@ -112,6 +112,10 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 
 		public String getColCondition() {
 			return getString(getColumnIndexOrThrow("condition"));
+		}
+		
+		public int getColWarehouse() {
+			return getInt(getColumnIndexOrThrow("warehouse"));
 		}
 	}
 
@@ -184,7 +188,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 
 	public static class ActivesCursor extends SQLiteCursor {
 		/** The query for this cursor */
-		private static final String QUERY = "SELECT warehouse, item, time FROM active";
+		private static final String QUERY = "SELECT item FROM active";
 
 		/** Cursor constructor */
 		ActivesCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
@@ -203,17 +207,8 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		/* Accessor functions -- one per database column */
 
 		/** foreign key column */
-		public int getColWarehouseId() {
-			return getInt(getColumnIndexOrThrow("warehouse"));
-		}
-
-		/** foreign key column */
 		public int getColItemId() {
 			return getInt(getColumnIndexOrThrow("item"));
-		}
-
-		public String getColTime() {
-			return getString(getColumnIndexOrThrow("time"));
 		}
 	}
 
@@ -278,8 +273,8 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		}
 
 		/** foreign key column */
-		public int getColType() {
-			return getInt(getColumnIndexOrThrow("type"));
+		public String getColType() {
+			return getString(getColumnIndexOrThrow("type"));
 		}
 
 		public String getColTime() {
@@ -438,11 +433,12 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 	 * @param name
 	 * @param condition
 	 */
-	public void addItem(int id, String type, String condition) {
+	public void addItem(int id, String type, String condition, int warehouse) {
 		ContentValues map = new ContentValues();
 		map.put("_id", id);
 		map.put("type", type);
 		map.put("condition", condition);
+		map.put("warehouse", warehouse);
 		try {
 			getWritableDatabase().insert("items", null, map);
 		} catch (SQLException e) {
@@ -487,116 +483,116 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		return c;
 	}
 
-	/**
-	 * Inactive
-	 * 
-	 * @param id
-	 * @param name
-	 * @param condition
-	 */
-	public void addInactive(int warehouse, int item, int amount) {
-		ContentValues map = new ContentValues();
-		map.put("warehouse", warehouse);
-		map.put("item", item);
-		try {
-			getWritableDatabase().insert("inactive", null, map);
-		} catch (SQLException e) {
-			Log.e("Error writing new inactive", e.toString());
-		}
-	}
+//	/**
+//	 * Inactive
+//	 * 
+//	 * @param id
+//	 * @param name
+//	 * @param condition
+//	 */
+//	public void addInactive(int warehouse, int item) {
+//		ContentValues map = new ContentValues();
+//		map.put("warehouse", warehouse);
+//		map.put("item", item);
+//		try {
+//			getWritableDatabase().insert("inactive", null, map);
+//		} catch (SQLException e) {
+//			Log.e("Error writing new inactive", e.toString());
+//		}
+//	}
+//
+//	public void deleteInactive(int item) {
+//		String[] whereArgs = new String[] { Integer.toString(item) };
+//		try {
+//			getWritableDatabase().delete("inactive", "item=?", whereArgs);
+//		} catch (SQLException e) {
+//			Log.e("Error deleteing inactive", e.toString());
+//		}
+//	}
+//
+//	public int getInactiveCount() {
+//
+//		Cursor c = null;
+//		try {
+//			c = getReadableDatabase().rawQuery("SELECT count(*) FROM inactive", null);
+//			if (0 >= c.getCount()) {
+//				return 0;
+//			}
+//			c.moveToFirst();
+//			return c.getInt(0);
+//		} finally {
+//			if (null != c) {
+//				try {
+//					c.close();
+//				} catch (SQLException e) {
+//				}
+//			}
+//		}
+//	}
+//
+//	public InactivesCursor getInactives() {
+//		String sql = InactivesCursor.QUERY;
+//		SQLiteDatabase d = getReadableDatabase();
+//		InactivesCursor c = (InactivesCursor) d.rawQueryWithFactory(new InactivesCursor.Factory(), sql, null, null);
+//		c.moveToFirst();
+//		return c;
+//	}
 
-	public void deleteInactive(int item) {
-		String[] whereArgs = new String[] { Integer.toString(item) };
-		try {
-			getWritableDatabase().delete("inactive", "item=?", whereArgs);
-		} catch (SQLException e) {
-			Log.e("Error deleteing inactive", e.toString());
-		}
-	}
-
-	public int getInactiveCount() {
-
-		Cursor c = null;
-		try {
-			c = getReadableDatabase().rawQuery("SELECT count(*) FROM inactive", null);
-			if (0 >= c.getCount()) {
-				return 0;
-			}
-			c.moveToFirst();
-			return c.getInt(0);
-		} finally {
-			if (null != c) {
-				try {
-					c.close();
-				} catch (SQLException e) {
-				}
-			}
-		}
-	}
-
-	public InactivesCursor getInactives() {
-		String sql = InactivesCursor.QUERY;
-		SQLiteDatabase d = getReadableDatabase();
-		InactivesCursor c = (InactivesCursor) d.rawQueryWithFactory(new InactivesCursor.Factory(), sql, null, null);
-		c.moveToFirst();
-		return c;
-	}
-
-	/**
-	 * Active
-	 * 
-	 * @param id
-	 * @param name
-	 * @param condition
-	 */
-	public void addActive(int warehouse, int item, String time) {
-		ContentValues map = new ContentValues();
-		map.put("warehouse", warehouse);
-		map.put("item", item);
-		map.put("time", time);
-		try {
-			getWritableDatabase().insert("active", null, map);
-		} catch (SQLException e) {
-			Log.e("Error writing new active", e.toString());
-		}
-	}
-
-	public void deleteActive(int item) {
-		String[] whereArgs = new String[] { Integer.toString(item) };
-		try {
-			getWritableDatabase().delete("active", "item=?", whereArgs);
-		} catch (SQLException e) {
-			Log.e("Error deleteing active", e.toString());
-		}
-	}
-
-	public int getActiveCount() {
-
-		Cursor c = null;
-		try {
-			c = getReadableDatabase().rawQuery("SELECT count(*) FROM active", null);
-			if (0 >= c.getCount()) {
-				return 0;
-			}
-			c.moveToFirst();
-			return c.getInt(0);
-		} finally {
-			if (null != c) {
-				try {
-					c.close();
-				} catch (SQLException e) {
-				}
-			}
-		}
-	}
-
-	public ActivesCursor getActives() {
-		String sql = ActivesCursor.QUERY;
-		SQLiteDatabase d = getReadableDatabase();
-		ActivesCursor c = (ActivesCursor) d.rawQueryWithFactory(new ActivesCursor.Factory(), sql, null, null);
-		c.moveToFirst();
-		return c;
-	}
+//	/**
+//	 * Active
+//	 * 
+//	 * @param id
+//	 * @param name
+//	 * @param condition
+//	 */
+//	public void addActive(int item) {
+//		ContentValues map = new ContentValues();
+//		map.put("warehouse", warehouse);
+//		map.put("item", item);
+//		map.put("time", time);
+//		try {
+//			getWritableDatabase().insert("active", null, map);
+//		} catch (SQLException e) {
+//			Log.e("Error writing new active", e.toString());
+//		}
+//	}
+//
+//	public void deleteActive(int item) {
+//		String[] whereArgs = new String[] { Integer.toString(item) };
+//		try {
+//			getWritableDatabase().delete("active", "item=?", whereArgs);
+//		} catch (SQLException e) {
+//			Log.e("Error deleteing active", e.toString());
+//		}
+//	}
+//
+//	public int getActiveCount() {
+//
+//		Cursor c = null;
+//		try {
+//			c = getReadableDatabase().rawQuery("SELECT count(*) FROM active", null);
+//			if (0 >= c.getCount()) {
+//				return 0;
+//			}
+//			c.moveToFirst();
+//			return c.getInt(0);
+//		} finally {
+//			if (null != c) {
+//				try {
+//					c.close();
+//				} catch (SQLException e) {
+//				}
+//			}
+//		}
+//	}
+//
+//	public ActivesCursor getActives() {
+//		String sql = ActivesCursor.QUERY;
+//		SQLiteDatabase d = getReadableDatabase();
+//		ActivesCursor c = (ActivesCursor) d.rawQueryWithFactory(new ActivesCursor.Factory(), sql, null, null);
+//		c.moveToFirst();
+//		return c;
+//	}
 
 	/**
 	 * Person

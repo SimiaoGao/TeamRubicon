@@ -1,7 +1,6 @@
 package org.teamrubiconusa.teamrubicon;
 
-import org.teamrubiconusa.teamrubicon.dao.ActiveDao;
-import org.teamrubiconusa.teamrubicon.dao.InactiveDao;
+import org.teamrubiconusa.teamrubicon.dao.DonateDao;
 import org.teamrubiconusa.teamrubicon.dao.ItemDao;
 import org.teamrubiconusa.teamrubicon.dao.LentDao;
 import org.teamrubiconusa.teamrubicon.dao.PersonDao;
@@ -17,8 +16,7 @@ public class TeamRubiconApp extends Application {
     	TypeDao.getInstance().setContext(this.getApplicationContext());
     	ItemDao.getInstance().setContext(this.getApplicationContext());
     	PersonDao.getInstance().setContext(this.getApplicationContext());
-    	ActiveDao.getInstance().setContext(this.getApplicationContext());
-    	InactiveDao.getInstance().setContext(this.getApplicationContext());
     	LentDao.getInstance().setContext(this.getApplicationContext());
+    	DonateDao.getInstance().setContext(this.getApplicationContext());
     }
 }

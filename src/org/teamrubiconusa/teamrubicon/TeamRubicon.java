@@ -1,7 +1,10 @@
 package org.teamrubiconusa.teamrubicon;
 
 import org.teamrubiconusa.teamrubicon.REST.RESTfulRequest;
+import org.teamrubiconusa.teamrubicon.REST.XMLParser;
+import org.teamrubiconusa.teamrubicon.dao.ItemDao;
 import org.teamrubiconusa.teamrubicon.dao.PersonDao;
+import org.teamrubiconusa.teamrubicon.dao.WarehouseDao;
 
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -12,7 +15,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class TeamRubicon extends FragmentActivity {
+public class TeamRubicon extends FragmentActivity implements DataLoaderListener {
 
 	private ViewPagerAdapter mSectionsPagerAdapter;
 	private ViewPager mViewPager;
@@ -22,7 +25,7 @@ public class TeamRubicon extends FragmentActivity {
     
     private ActionBar actionBar;
     
-    private static String URL = "http://54.235.71.143/htm/rest_home.php/event.xml";
+    private static String URL = "http://54.235.71.143/htm/rest_home.php/person.xml";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,8 @@ public class TeamRubicon extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-
+	
+		
 	}
 	
 	@Override
@@ -50,11 +54,10 @@ public class TeamRubicon extends FragmentActivity {
 		progressBar = (ProgressBar) this.findViewById(R.id.action_bar_progress);
 
 
-		myRequest = new RESTfulRequest(this, progressBar);
+		myRequest = new RESTfulRequest(this, progressBar, XMLParser.PERSON, this);
 		myRequest.execute(URL);
 		
-		
-				
+		//Toast.makeText(this, WarehouseDao.getInstance().getWarehouseById(1).toString(), Toast.LENGTH_LONG);
 	}
 
 	@Override
@@ -63,6 +66,27 @@ public class TeamRubicon extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.team_rubicon, menu);
 		return true;
 	}
-	
 
+	@Override
+	public void onDataReceived(int type) {
+		switch (type) {
+		case XMLParser.WAREHOUSE:
+			Toast.makeText(this, WarehouseDao.getInstance().getWarehouseById(1).toString(), Toast.LENGTH_LONG).show();
+			break;
+		case XMLParser.ITEM:
+			Toast.makeText(this, ItemDao.getInstance().getItemById(1).toString(), Toast.LENGTH_LONG).show();
+			break;
+		case XMLParser.PERSON:
+			Toast.makeText(this, PersonDao.getInstance().getPersonById(1).toString(), Toast.LENGTH_LONG).show();
+			break;
+		case XMLParser.ACTIVE:
+			break;
+		case XMLParser.INACTIVE:
+			break;
+		case XMLParser.LENT:
+			break;
+			
+		default:
+		}
+	}
 }

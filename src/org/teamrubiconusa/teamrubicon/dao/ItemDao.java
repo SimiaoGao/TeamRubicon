@@ -37,9 +37,18 @@ public class ItemDao {
 		TeamRubiconDb.ItemsCursor itemCursor = db.getItems();
 		for (int rowNum = 0; rowNum < itemCursor.getCount(); rowNum++) {
 			itemCursor.moveToPosition(rowNum);
-			Item temp = new Item(itemCursor.getColId(), itemCursor.getColType(), itemCursor.getColCondition());
+			Item temp = new Item(itemCursor.getColId(), itemCursor.getColType(), itemCursor.getColCondition(), itemCursor.getColWarehouse());
 			items.put(itemCursor.getColId(), temp);
 		}
+	}
+	 
+	public boolean addItem(Item item) {
+		if (items.get(item.getId()) == null) {
+			db.addItem(item.getId(), item.getType(), item.getCondition(), item.getWarehouse());
+			items.put(item.getId(), item);
+			return true;
+		}
+		return false;
 	}
 	
 	public Item getItemById(int id) {

@@ -10,6 +10,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.teamrubiconusa.teamrubicon.DataLoaderListener;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -22,11 +23,15 @@ public class RESTfulRequest extends AsyncTask<String, Integer, ByteArrayOutputSt
     private XMLParser parser;
     private ProgressBar progressBar;
     private Activity parent;
+    private int type;
+    private DataLoaderListener dll;
     
     
-    public RESTfulRequest(final Activity parent, final ProgressBar progress) {
+    public RESTfulRequest(final Activity parent, final ProgressBar progress, final int type, final DataLoaderListener dll) {
         this.parent = parent;
         this.progressBar = progress;
+        this.type = type;
+        this.dll = dll;
     }
     
     @Override
@@ -63,7 +68,7 @@ public class RESTfulRequest extends AsyncTask<String, Integer, ByteArrayOutputSt
         	Toast.makeText(this.parent, "No Internet Connections", Toast.LENGTH_SHORT).show();
         	progressBar.setVisibility(View.GONE);
         } else{
-        	parser = new XMLParser(progressBar, parent);
+        	parser = new XMLParser(progressBar, parent, this.type, this.dll);
         	parser.execute(result.toString());
         }
     }

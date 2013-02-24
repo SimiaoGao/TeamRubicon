@@ -12,20 +12,10 @@
         PRAGMA foreign_keys=ON;
         CREATE TABLE warehouses ( _id INTEGER PRIMARY KEY, name TEXT NOT NULL, location TEXT NOT NULL);
         CREATE TABLE types (_id TEXT PRIMARY KEY);
-        CREATE TABLE items ( _id INTEGER PRIMARY KEY, type TEXT NOT NULL, condition TEXT NOT NULL, FOREIGN KEY(type) REFERENCES types(_id) ON DELETE CASCADE ON UPDATE CASCADE);
- 		CREATE TABLE inactive (warehouse INTEGER NOT NULL, item INTEGER NOT NULL, PRIMARY KEY(warehouse, item), FOREIGN KEY(warehouse) REFERENCES warehouses(_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(item) REFERENCES items(_id) ON DELETE CASCADE ON UPDATE CASCADE);
- 		CREATE TABLE active (warehouse INTEGER NOT NULL, item INTEGER NOT NULL, time TEXT NOT NULL, PRIMARY KEY(warehouse, item), FOREIGN KEY(warehouse) REFERENCES warehouses(_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(item) REFERENCES items(_id) ON DELETE CASCADE ON UPDATE CASCADE);
+        CREATE TABLE items ( _id INTEGER PRIMARY KEY, type TEXT NOT NULL, condition TEXT NOT NULL, warehouse INTEGER NOT NULL, FOREIGN KEY(type) REFERENCES types(_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(warehouse) REFERENCES warehouses(_id) ON DELETE CASCADE ON UPDATE CASCADE);
  		CREATE TABLE persons ( _id INTEGER PRIMARY KEY, name TEXT NOT NULL, role TEXT NOT NULL, phone TEXT UNIQUE);
 		CREATE TABLE lent (person INTEGER NOT NULL, item INTEGER NOT NULL, time TEXT NOT NULL, PRIMARY KEY(person, item), FOREIGN KEY(person) REFERENCES persons(_id) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY(item) REFERENCES items(_id) ON DELETE RESTRICT ON UPDATE CASCADE);
 		CREATE TABLE donate (_id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT NOT NULL, time TEXT NOT NULL, FOREIGN KEY(type) REFERENCES type(_id) ON DELETE NO ACTION ON UPDATE CASCADE);
-        INSERT INTO warehouses (_id, name, location) VALUES (1, 'PennWare10', '48 Broad St, Philadelphia, PA 12934');
-        INSERT INTO types (_id) VALUES ('Hammer');
-        INSERT INTO items (_id, type, condition) VALUES (1, 'Hammer', 'new');
-        INSERT INTO inactive (warehouse, item) VALUES (1, 1);
-        INSERT INTO active (warehouse, item, time) VALUES (1, 1, '10:00');        
-        INSERT INTO persons (_id, name, role, phone) VALUES (1, 'Steve John', 'manager', '8383231234');
-        INSERT INTO lent (person, item, time) VALUES (1, 1, '10:00');
-        INSERT INTO donate (_id, type, time) VALUES (1, 'Hammer', '11:11');
 	"</string>
 
 </resources>

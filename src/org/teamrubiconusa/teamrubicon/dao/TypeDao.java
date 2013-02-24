@@ -1,16 +1,19 @@
 package org.teamrubiconusa.teamrubicon.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.teamrubiconusa.teamrubicon.model.TeamRubiconDb;
+import org.teamrubiconusa.teamrubicon.model.Type;
 
 import android.content.Context;
 public class TypeDao {
 
 	private static volatile TypeDao instance = null;
 
-	private final List<String> types = new ArrayList<String>();
+	private final Map<String, Type> types = new HashMap<String, Type>();
 	private TeamRubiconDb db;
 
 	private TypeDao() {
@@ -36,7 +39,7 @@ public class TypeDao {
 		TeamRubiconDb.TypesCursor typesCursor = db.getType();
 		for (int rowNum = 0; rowNum < typesCursor.getCount(); rowNum++) {
 			typesCursor.moveToPosition(rowNum);
-			types.add(typesCursor.getColId());
+			types.put(typesCursor.getColId(), new Type(typesCursor.getColId()));
 		}
 	}
 
@@ -44,8 +47,8 @@ public class TypeDao {
 		if (type == null || type.equals("")) {
 			return;
 		}
-		if (!types.contains(type)) {
-			types.add(type);
+		if (types.get(type) != null) {
+			types.put(type, new Type(type));
 			db.addType(type);
 		}
 	}
@@ -55,7 +58,15 @@ public class TypeDao {
 		db.deleteType(type);
 	}
 
-	public List<String> getTypes() {
-		return types;
+	public List<String> getStringTypes() {
+		List<String> keyList = new ArrayList<String>();
+		for (String s : types.keySet()) {
+			keyList.add(s);
+		}
+		return keyList;
+	}
+	
+	public Type getTypeByString(String type) {
+		return types.get(type);
 	}
 }

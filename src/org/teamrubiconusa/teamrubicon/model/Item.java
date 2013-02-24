@@ -5,16 +5,18 @@ public class Item {
 	int id;
 	String type;
 	String condition;
+	int warehouse;
 	
 	public Item() {
 		super();
 	}
 	
-	public Item(int id, String type, String condition) {
+	public Item(int id, String type, String condition, int warehouse) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.condition = condition;
+		this.warehouse = warehouse;
 	}
 	
 	public int getId() {
@@ -41,6 +43,14 @@ public class Item {
 		this.condition = condition;
 	}
 	
+	public int getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(int warehouse) {
+		this.warehouse = warehouse;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -65,6 +75,6 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", type=" + type + ", condition=" + condition + "]";
+		return "Item [id=" + id + ", type=" + type + ", condition=" + condition + ", warehouse=" + warehouse + "]";
 	}
 }

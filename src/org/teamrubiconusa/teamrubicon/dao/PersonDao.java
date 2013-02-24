@@ -3,6 +3,7 @@ package org.teamrubiconusa.teamrubicon.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.teamrubiconusa.teamrubicon.model.Item;
 import org.teamrubiconusa.teamrubicon.model.Person;
 import org.teamrubiconusa.teamrubicon.model.TeamRubiconDb;
 
@@ -44,5 +45,14 @@ public class PersonDao {
 	
 	public Person getPersonById(int id) {
 		return persons.get(new Integer(id));
+	}
+	 
+	public boolean addPerson(Person person) {
+		if (persons.get(person.getId()) == null) {
+			db.addPerson(person.getId(), person.getName(), person.getRole(), person.getPhone());
+			persons.put(person.getId(), person);
+			return true;
+		}
+		return false;
 	}
 }
