@@ -3,16 +3,10 @@ package org.teamrubiconusa.teamrubicon;
 import java.util.List;
 
 import org.teamrubiconusa.teamrubicon.REST.RESTfulRequest;
-<<<<<<< HEAD
 import org.teamrubiconusa.teamrubicon.REST.XMLParser;
 import org.teamrubiconusa.teamrubicon.dao.ItemDao;
 import org.teamrubiconusa.teamrubicon.dao.PersonDao;
 import org.teamrubiconusa.teamrubicon.dao.WarehouseDao;
-=======
-import org.teamrubiconusa.teamrubicon.dao.InactiveDao;
-import org.teamrubiconusa.teamrubicon.dao.PersonDao;
-import org.teamrubiconusa.teamrubicon.model.Inactive;
->>>>>>> fdce5dbc77e531f08c297624e6265fe2bb0b8c4f
 
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -67,16 +61,8 @@ public class TeamRubicon extends FragmentActivity implements DataLoaderListener 
 
 		myRequest = new RESTfulRequest(this, progressBar, XMLParser.PERSON, this);
 		myRequest.execute(URL);
-		
-<<<<<<< HEAD
 		//Toast.makeText(this, WarehouseDao.getInstance().getWarehouseById(1).toString(), Toast.LENGTH_LONG);
-=======
-		
-		List<Inactive> value = InactiveDao.getInstance().getAllInactives();
-		value.get(0).getItem();
-		
-				
->>>>>>> fdce5dbc77e531f08c297624e6265fe2bb0b8c4f
+
 	}
 
 	@Override
@@ -85,14 +71,10 @@ public class TeamRubicon extends FragmentActivity implements DataLoaderListener 
 		getMenuInflater().inflate(R.menu.team_rubicon, menu);
 		return true;
 	}
-<<<<<<< HEAD
-=======
 	
 	public static TeamRubicon getInstance(){
 		return thisInstance;
 	}
-	
->>>>>>> fdce5dbc77e531f08c297624e6265fe2bb0b8c4f
 
 	@Override
 	public void onDataReceived(int type) {
