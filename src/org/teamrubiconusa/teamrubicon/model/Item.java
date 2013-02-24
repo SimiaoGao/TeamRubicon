@@ -3,17 +3,17 @@ package org.teamrubiconusa.teamrubicon.model;
 public class Item {
 
 	int id;
-	String name;
+	String type;
 	String condition;
 	
 	public Item() {
 		super();
 	}
 	
-	public Item(int id, String name, String condition) {
+	public Item(int id, String type, String condition) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.type = type;
 		this.condition = condition;
 	}
 	
@@ -25,12 +25,12 @@ public class Item {
 		this.id = id;
 	}
 	
-	public String getName() {
-		return name;
+	public String getType() {
+		return type;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	public String getCondition() {
@@ -65,6 +65,6 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", name=" + name + ", condition=" + condition + "]";
+		return "Item [id=" + id + ", type=" + type + ", condition=" + condition + "]";
 	}
 }

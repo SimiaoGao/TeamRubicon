@@ -63,7 +63,7 @@ public class RESTfulRequest extends AsyncTask<String, Integer, ByteArrayOutputSt
         	Toast.makeText(this.parent, "No Internet Connections", Toast.LENGTH_SHORT).show();
         	progressBar.setVisibility(View.GONE);
         } else{
-        	parser = new XMLParser(progressBar);
+        	parser = new XMLParser(progressBar, parent);
         	parser.execute(result.toString());
         }
     }

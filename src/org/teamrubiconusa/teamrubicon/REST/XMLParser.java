@@ -7,13 +7,16 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.teamrubiconusa.teamrubicon.ViewPagerAdapter;
+import org.teamrubiconusa.teamrubicon.WallaceDB.LocationDataSource;
+import org.teamrubiconusa.teamrubicon.WallaceModels.Event;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -22,14 +25,24 @@ import android.widget.ProgressBar;
 public class XMLParser extends AsyncTask<String, Integer, Void>{
 	static final String KEY_ITEM = "row"; 
 	static final String KEY_ID = "id";
-	static final String KEY_TEXT = "text";
-	static final String KEY_RATING = "rating";
-	static final String KEY_FLAGGED = "flagged";
+	static final String KEY_NAME = "name";
+	static final String KEY_LOCATION = "location";
 	
 	private ProgressBar progressBar;
+	private Activity parent;
+	
+	//SqlLite variables
+	private static LocationDataSource sqlLiteDatabase;
 
-	public XMLParser(ProgressBar progress){
+
+	public XMLParser(ProgressBar progress, Activity parent){
 		this.progressBar = progress;
+		this.parent = parent;
+    	//Open our database connection
+    	if(sqlLiteDatabase == null){
+    		sqlLiteDatabase = new LocationDataSource(parent.getApplicationContext());
+    		sqlLiteDatabase.open();
+    	}
  	}
 	
 	@Override
@@ -42,9 +55,11 @@ public class XMLParser extends AsyncTask<String, Integer, Void>{
     protected void onPostExecute(Void arg0) {
         super.onPostExecute(arg0);
         progressBar.setVisibility(View.GONE);
+//        ViewPagerAdapter.updateList(sqlLiteDatabase.getAllEvents());
     }
 	
 	public void parseText(String xml){
+		sqlLiteDatabase.deleteAllEvents();
 		Document doc = getDomElement(xml);
 		 
 		//The list is in 'Row' elements
@@ -53,13 +68,12 @@ public class XMLParser extends AsyncTask<String, Integer, Void>{
 		// looping through all row nodes <row>
 		for (int i = 0; i < nl.getLength(); i++) {
 			Element e = (Element) nl.item(i);
-		    String id = getValue(e, KEY_ID);
-		    String text = getValue(e, KEY_TEXT);
-		    String rating = getValue(e, KEY_RATING);
-		    String flagged = getValue(e, KEY_FLAGGED);
-		    //
-			//Here we need to update our database!
-		    //
+			Event event = new Event();
+			
+			event.setEventName(getValue(e, KEY_NAME));
+			event.setEventLocation(getValue(e, KEY_LOCATION));
+
+		    sqlLiteDatabase.createEvent(event);
 		}
 	}
 	

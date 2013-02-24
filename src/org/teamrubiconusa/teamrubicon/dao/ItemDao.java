@@ -11,7 +11,6 @@ import android.content.Context;
 public class ItemDao {
 
 	private static volatile ItemDao instance = null;
-	private Context context;
 	private TeamRubiconDb db;
 	private Map<Integer, Item> items = new HashMap<Integer, Item>();
 	
@@ -38,12 +37,12 @@ public class ItemDao {
 		TeamRubiconDb.ItemsCursor itemCursor = db.getItems();
 		for (int rowNum = 0; rowNum < itemCursor.getCount(); rowNum++) {
 			itemCursor.moveToPosition(rowNum);
-			Item temp = new Item(itemCursor.getColId(), itemCursor.getColName(), itemCursor.getColCondition());
+			Item temp = new Item(itemCursor.getColId(), itemCursor.getColType(), itemCursor.getColCondition());
 			items.put(itemCursor.getColId(), temp);
 		}
 	}
 	
 	public Item getItemById(int id) {
-		return items.get(Integer.toString(id));
+		return items.get(new Integer(id));
 	}
 }

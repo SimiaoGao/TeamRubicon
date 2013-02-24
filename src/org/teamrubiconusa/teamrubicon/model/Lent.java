@@ -6,18 +6,16 @@ public class Lent {
 
 	Person person;
 	Item item;
-	int amount;
 	Calendar time;
 	
 	public Lent() {
 		super();
 	}
 
-	public Lent(Person person, Item item, int amount, Calendar time) {
+	public Lent(Person person, Item item, Calendar time) {
 		super();
 		this.person = person;
 		this.item = item;
-		this.amount = amount;
 		this.time = time;
 	}
 
@@ -37,14 +35,6 @@ public class Lent {
 		this.item = item;
 	}
 
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
 	public Calendar getTime() {
 		return time;
 	}
@@ -57,7 +47,6 @@ public class Lent {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + amount;
 		result = prime * result + ((item == null) ? 0 : item.hashCode());
 		result = prime * result + ((person == null) ? 0 : person.hashCode());
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
@@ -73,8 +62,6 @@ public class Lent {
 		if (getClass() != obj.getClass())
 			return false;
 		Lent other = (Lent) obj;
-		if (amount != other.amount)
-			return false;
 		if (item == null) {
 			if (other.item != null)
 				return false;
@@ -95,6 +82,6 @@ public class Lent {
 
 	@Override
 	public String toString() {
-		return "Lent [person=" + person + ", item=" + item + ", amount=" + amount + ", time=" + time + "]";
+		return "Lent [person=" + person + ", item=" + item + ", time=" + time + "]";
 	}
 }

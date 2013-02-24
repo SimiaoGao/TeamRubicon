@@ -4,17 +4,15 @@ public class Inactive {
 
 	Warehouse warehouse;
 	Item item;
-	int amount;
 	
 	public Inactive() {
 		super();
 	}
 
-	public Inactive(Warehouse warehouse, Item item, int amount) {
+	public Inactive(Warehouse warehouse, Item item) {
 		super();
 		this.warehouse = warehouse;
 		this.item = item;
-		this.amount = amount;
 	}
 
 	public Warehouse getWarehouse() {
@@ -33,21 +31,11 @@ public class Inactive {
 		this.item = item;
 	}
 
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + amount;
 		result = prime * result + ((item == null) ? 0 : item.hashCode());
-		result = prime * result + ((warehouse == null) ? 0 : warehouse.hashCode());
 		return result;
 	}
 
@@ -60,23 +48,16 @@ public class Inactive {
 		if (getClass() != obj.getClass())
 			return false;
 		Inactive other = (Inactive) obj;
-		if (amount != other.amount)
-			return false;
 		if (item == null) {
 			if (other.item != null)
 				return false;
 		} else if (!item.equals(other.item))
-			return false;
-		if (warehouse == null) {
-			if (other.warehouse != null)
-				return false;
-		} else if (!warehouse.equals(other.warehouse))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Inactive [warehouse=" + warehouse + ", item=" + item + ", amount=" + amount + "]";
+		return "Inactive [warehouse=" + warehouse + ", item=" + item + "]";
 	}
 }

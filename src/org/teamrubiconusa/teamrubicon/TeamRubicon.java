@@ -1,6 +1,8 @@
 package org.teamrubiconusa.teamrubicon;
 
 import org.teamrubiconusa.teamrubicon.REST.RESTfulRequest;
+import org.teamrubiconusa.teamrubicon.dao.ActiveDao;
+
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -8,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class TeamRubicon extends FragmentActivity {
 
@@ -33,7 +36,6 @@ public class TeamRubicon extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-
 	}
 	
 	@Override
@@ -50,7 +52,6 @@ public class TeamRubicon extends FragmentActivity {
 		
 		myRequest = new RESTfulRequest(this, progressBar);
 		myRequest.execute(URL);
-		
 	}
 
 	@Override

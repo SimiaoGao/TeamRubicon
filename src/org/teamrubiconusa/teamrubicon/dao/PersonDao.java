@@ -11,7 +11,6 @@ import android.content.Context;
 public class PersonDao {
 
 	private static volatile PersonDao instance = null;
-	private Context context;
 	private TeamRubiconDb db;
 	private Map<Integer, Person> persons = new HashMap<Integer, Person>();
 	
@@ -44,6 +43,6 @@ public class PersonDao {
 	}
 	
 	public Person getPersonById(int id) {
-		return persons.get(Integer.toString(id));
+		return persons.get(new Integer(id));
 	}
 }
