@@ -11,7 +11,8 @@
         android:src="@drawable/logo"
         android:padding="4dp"
         android:contentDescription="@string/app_name" />
-              
+   
+    
     <ProgressBar
         android:id="@+id/action_bar_progress"
         android:layout_width="30dp"

@@ -1,13 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-        android:text="Hello world"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="fill_parent"
+    	android:layout_height="50dp"
+    	android:orientation="horizontal" 
+    	android:weightSum="1"
+    	android:paddingTop="15dp">
+    	
+	    <TextView android:id="@+id/label1"
+	        android:layout_width="200dp"
+	        android:layout_height="45dp"
+	        android:layout_weight=".2"
+	        android:paddingLeft="10dp"
+	        android:text="Item:"
+	        android:hint="@string/app_name" />
+	    
+        <EditText android:id="@+id/input1"
+	        android:layout_width="750dp"
+	        android:layout_weight=".8"
+	        android:gravity="left"
+	        android:layout_height="35dp"
+	        android:hint="Semper" />
+	    	    
+	</LinearLayout>
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="fill_parent"
+    	android:layout_height="50dp"
+    	android:orientation="horizontal" 
+    	android:weightSum="1"
+    	android:paddingTop="15dp">
+    	
+	    <TextView android:id="@+id/label2"
+	        android:layout_width="200dp"
+	        android:layout_height="45dp"
+	        android:layout_weight=".2"
+	        android:paddingLeft="10dp"
+	        android:text="Name"
+	        android:hint="@string/app_name" />
+	    
+        <EditText android:id="@+id/input2"
+	        android:layout_width="750dp"
+	        android:layout_weight=".8"
+	        android:gravity="left"
+	        android:layout_height="35dp"
+	        android:hint="Gumby" />
+	    	    
+	</LinearLayout>
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="fill_parent"
+    	android:layout_height="50dp"
+    	android:orientation="horizontal" 
+    	android:weightSum="1"
+    	android:paddingTop="15dp">
+    	
+	    <TextView android:id="@+id/label3"
+	        android:layout_width="200dp"
+	        android:layout_height="45dp"
+	        android:layout_weight=".2"
+	        android:paddingLeft="10dp"
+	        android:text="Phone #:"
+	        android:hint="Gets" />
+	    
+        <EditText android:id="@+id/input3"
+	        android:layout_width="750dp"
+	        android:layout_weight=".8"
+	        android:gravity="left"
+	        android:layout_height="35dp"
+	        android:hint="Gets" />
+	    	    
+	</LinearLayout>
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="fill_parent"
+    	android:layout_height="50dp"
+    	android:orientation="horizontal" 
+    	android:weightSum="1"
+    	android:paddingTop="15dp">
+    	
+	    <TextView android:id="@+id/label4"
+	        android:layout_width="200dp"
+	        android:layout_height="45dp"
+	        android:layout_weight=".2"
+	        android:paddingLeft="10dp"
+	        android:text="Condition:"
+	        android:hint="@string/app_name" />
+	    
+        <EditText android:id="@+id/input4"
+	        android:layout_width="750dp"
+	        android:layout_weight=".8"
+	        android:gravity="left"
+	        android:layout_height="35dp"
+	        android:hint="It" />
+	    	    
+	</LinearLayout>
+        
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="fill_parent"
+    	android:layout_height="50dp"
+    	android:orientation="horizontal" 
+    	android:weightSum="1"
+    	android:paddingTop="15dp">
+    	
+	    <TextView android:id="@+id/label5"
+	        android:layout_width="200dp"
+	        android:layout_height="45dp"
+	        android:layout_weight=".2"
+	        android:paddingLeft="10dp"
+	        android:text="Comments:"
+	        android:hint="@string/app_name" />
+	    
+        <EditText android:id="@+id/input5"
+	        android:layout_width="750dp"
+	        android:layout_weight=".8"
+	        android:gravity="left"
+	        android:layout_height="35dp"
+	        android:hint="Done" />
+	    	    
+	</LinearLayout>
+	
+   <Button android:id="@+id/button_send"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Add Item" />
+            
     
 
 </LinearLayout>
