@@ -1,7 +1,7 @@
 package org.teamrubiconusa.teamrubicon;
 
 import org.teamrubiconusa.teamrubicon.REST.RESTfulRequest;
-import org.teamrubiconusa.teamrubicon.dao.ActiveDao;
+import org.teamrubiconusa.teamrubicon.dao.PersonDao;
 
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class TeamRubicon extends FragmentActivity {
 
-	private RubiconPagerAdapter mSectionsPagerAdapter;
+	private ViewPagerAdapter mSectionsPagerAdapter;
 	private ViewPager mViewPager;
 	
     private ProgressBar progressBar;
@@ -22,7 +22,7 @@ public class TeamRubicon extends FragmentActivity {
     
     private ActionBar actionBar;
     
-    private static String URL = "http://54.235.71.143/htm/rest_home.php/person.xml";
+    private static String URL = "http://54.235.71.143/htm/rest_home.php/event.xml";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +30,12 @@ public class TeamRubicon extends FragmentActivity {
 		setContentView(R.layout.activity_team_rubicon);
 
 		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the app.
-		mSectionsPagerAdapter = new RubiconPagerAdapter(getSupportFragmentManager());
+		mSectionsPagerAdapter = new ViewPagerAdapter();
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+
 	}
 	
 	@Override
@@ -49,9 +49,12 @@ public class TeamRubicon extends FragmentActivity {
 		
 		progressBar = (ProgressBar) this.findViewById(R.id.action_bar_progress);
 
-		
+
 		myRequest = new RESTfulRequest(this, progressBar);
 		myRequest.execute(URL);
+		
+		
+				
 	}
 
 	@Override

@@ -28,16 +28,25 @@ public final class R {
     public static final class id {
         public static final int action_bar_icon=0x7f080002;
         public static final int action_bar_progress=0x7f080003;
-        public static final int action_settings=0x7f080005;
-        public static final int background_image=0x7f080004;
+        public static final int action_settings=0x7f08000b;
+        public static final int background_image=0x7f08000a;
+        public static final int black_line=0x7f080007;
+        public static final int location=0x7f080008;
+        public static final int name=0x7f080005;
+        public static final int notes_list=0x7f080009;
         public static final int pager=0x7f080000;
         public static final int section_label=0x7f080001;
+        public static final int title_image=0x7f080006;
+        public static final int title_layout=0x7f080004;
     }
     public static final class layout {
         public static final int activity_team_rubicon=0x7f030000;
-        public static final int fragment_team_rubicon_dummy=0x7f030001;
-        public static final int progress_layout=0x7f030002;
-        public static final int splash_screen=0x7f030003;
+        public static final int first_pane=0x7f030001;
+        public static final int fragment_team_rubicon_dummy=0x7f030002;
+        public static final int progress_layout=0x7f030003;
+        public static final int row_layout=0x7f030004;
+        public static final int second_pane=0x7f030005;
+        public static final int splash_screen=0x7f030006;
     }
     public static final class menu {
         public static final int team_rubicon=0x7f070000;
