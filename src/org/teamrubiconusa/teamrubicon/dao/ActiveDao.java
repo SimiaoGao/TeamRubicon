@@ -12,7 +12,6 @@ import android.content.Context;
 public class ActiveDao {
 
 	private static volatile ActiveDao instance = null;
-	private Context context;
 	private TeamRubiconDb db;
 	private List<Active> actives = new ArrayList<Active>();
 	private final static String TIME_SEPARATOR = ":";
@@ -43,7 +42,7 @@ public class ActiveDao {
 			
 			Active temp = new Active(WarehouseDao.getInstance().getWarehouseById(activeCursor.getColWarehouseId()), 
 									 ItemDao.getInstance().getItemById(activeCursor.getColItemId()), 
-									activeCursor.getColAmount() ,stringToCalendar(activeCursor.getColTime()));
+									 stringToCalendar(activeCursor.getColTime()));
 			actives.add(temp);
 		}
 	}

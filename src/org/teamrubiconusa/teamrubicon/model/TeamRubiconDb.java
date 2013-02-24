@@ -58,10 +58,34 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			return getString(getColumnIndexOrThrow("location"));
 		}
 	}
-	
+
+	public static class TypesCursor extends SQLiteCursor {
+		/** The query for this cursor */
+		private static final String QUERY = "SELECT _id FROM types";
+
+		/** Cursor constructor */
+		TypesCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+			super(db, driver, editTable, query);
+		}
+
+		/** Private factory class necessary for rawQueryWithFactory() call */
+		private static class Factory implements SQLiteDatabase.CursorFactory {
+
+			@Override
+			public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+				return new TypesCursor(db, driver, editTable, query);
+			}
+		}
+
+		/* Accessor functions -- one per database column */
+		public String getColId() {
+			return getString(getColumnIndexOrThrow("_id"));
+		}
+	}
+
 	public static class ItemsCursor extends SQLiteCursor {
 		/** The query for this cursor */
-		private static final String QUERY = "SELECT _id, name, condition FROM items";
+		private static final String QUERY = "SELECT _id, type, condition FROM items";
 
 		/** Cursor constructor */
 		ItemsCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
@@ -82,15 +106,15 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			return getInt(getColumnIndexOrThrow("_id"));
 		}
 
-		public String getColName() {
-			return getString(getColumnIndexOrThrow("name"));
+		public String getColType() {
+			return getString(getColumnIndexOrThrow("type"));
 		}
 
 		public String getColCondition() {
 			return getString(getColumnIndexOrThrow("condition"));
 		}
 	}
-	
+
 	public static class PersonsCursor extends SQLiteCursor {
 		/** The query for this cursor */
 		private static final String QUERY = "SELECT _id, name, role, phone FROM persons";
@@ -121,7 +145,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		public String getColRole() {
 			return getString(getColumnIndexOrThrow("role"));
 		}
-		
+
 		public String getColPhone() {
 			return getString(getColumnIndexOrThrow("phone"));
 		}
@@ -129,7 +153,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 
 	public static class InactivesCursor extends SQLiteCursor {
 		/** The query for this cursor */
-		private static final String QUERY = "SELECT warehouse, item, amount FROM inactive";
+		private static final String QUERY = "SELECT warehouse, item FROM inactive";
 
 		/** Cursor constructor */
 		InactivesCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
@@ -138,7 +162,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 
 		/** Private factory class necessary for rawQueryWithFactory() call */
 		private static class Factory implements SQLiteDatabase.CursorFactory {
-			
+
 			@Override
 			public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
 				return new InactivesCursor(db, driver, editTable, query);
@@ -156,15 +180,11 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		public int getColItemId() {
 			return getInt(getColumnIndexOrThrow("item"));
 		}
-		
-		public int getColAmount() {
-			return getInt(getColumnIndexOrThrow("amount"));
-		}
 	}
-	
+
 	public static class ActivesCursor extends SQLiteCursor {
 		/** The query for this cursor */
-		private static final String QUERY = "SELECT warehouse, item, amount, time FROM active";
+		private static final String QUERY = "SELECT warehouse, item, time FROM active";
 
 		/** Cursor constructor */
 		ActivesCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
@@ -173,7 +193,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 
 		/** Private factory class necessary for rawQueryWithFactory() call */
 		private static class Factory implements SQLiteDatabase.CursorFactory {
-			
+
 			@Override
 			public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
 				return new ActivesCursor(db, driver, editTable, query);
@@ -191,19 +211,15 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		public int getColItemId() {
 			return getInt(getColumnIndexOrThrow("item"));
 		}
-		
-		public int getColAmount() {
-			return getInt(getColumnIndexOrThrow("amount"));
-		}
-		
+
 		public String getColTime() {
 			return getString(getColumnIndexOrThrow("time"));
 		}
 	}
-	
+
 	public static class LentsCursor extends SQLiteCursor {
 		/** The query for this cursor */
-		private static final String QUERY = "SELECT person, item, amount, time FROM lent";
+		private static final String QUERY = "SELECT person, item, time FROM lent";
 
 		/** Cursor constructor */
 		LentsCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
@@ -212,7 +228,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 
 		/** Private factory class necessary for rawQueryWithFactory() call */
 		private static class Factory implements SQLiteDatabase.CursorFactory {
-			
+
 			@Override
 			public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
 				return new LentsCursor(db, driver, editTable, query);
@@ -230,16 +246,47 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		public int getColItemId() {
 			return getInt(getColumnIndexOrThrow("item"));
 		}
-		
-		public int getColAmount() {
-			return getInt(getColumnIndexOrThrow("amount"));
-		}
-		
+
 		public String getColTime() {
 			return getString(getColumnIndexOrThrow("time"));
 		}
 	}
-	
+
+	public static class DonatesCursor extends SQLiteCursor {
+		/** The query for this cursor */
+		private static final String QUERY = "SELECT _id, type, time FROM donate";
+
+		/** Cursor constructor */
+		DonatesCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+			super(db, driver, editTable, query);
+		}
+
+		/** Private factory class necessary for rawQueryWithFactory() call */
+		private static class Factory implements SQLiteDatabase.CursorFactory {
+
+			@Override
+			public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+				return new DonatesCursor(db, driver, editTable, query);
+			}
+		}
+
+		/* Accessor functions -- one per database column */
+
+		/** foreign key column */
+		public int getColId() {
+			return getInt(getColumnIndexOrThrow("_id"));
+		}
+
+		/** foreign key column */
+		public int getColType() {
+			return getInt(getColumnIndexOrThrow("type"));
+		}
+
+		public String getColTime() {
+			return getString(getColumnIndexOrThrow("time"));
+		}
+	}
+
 	/**
 	 * Execute all of the SQL statements in the String[] array
 	 * 
@@ -255,11 +302,11 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		
-		String[] sql = mContext.getString(R.string.smsAutoResponder_onCreate).split("\n");
+
+		String[] sql = mContext.getString(R.string.teamRubicon_onCreate).split("\n");
 		db.beginTransaction();
 		try {
 			// Create tables & test data
@@ -275,10 +322,10 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 	}
-	
-	
+
 	/**
 	 * Warehouse
+	 * 
 	 * @param id
 	 * @param name
 	 * @param location
@@ -294,7 +341,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			Log.e("Error writing new warehouse", e.toString());
 		}
 	}
-	
+
 	public void deleteWarehouse(int id) {
 		String[] whereArgs = new String[] { Integer.toString(id) };
 		try {
@@ -303,7 +350,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			Log.e("Error deleteing warehouse", e.toString());
 		}
 	}
-	
+
 	public int getWarehousesCount() {
 
 		Cursor c = null;
@@ -323,7 +370,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			}
 		}
 	}
-	
+
 	public WarehousesCursor getWarehouses() {
 		String sql = WarehousesCursor.QUERY;
 		SQLiteDatabase d = getReadableDatabase();
@@ -331,18 +378,70 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		c.moveToFirst();
 		return c;
 	}
-	
-	
+
+	/**
+	 * Type
+	 * 
+	 * @param id
+	 */
+	public void addType(String id) {
+		ContentValues map = new ContentValues();
+		map.put("_id", id);
+		try {
+			getWritableDatabase().insert("types", null, map);
+		} catch (SQLException e) {
+			Log.e("Error writing new type", e.toString());
+		}
+	}
+
+	public void deleteType(String id) {
+		String[] whereArgs = new String[] { id };
+		try {
+			getWritableDatabase().delete("types", "_id=?", whereArgs);
+		} catch (SQLException e) {
+			Log.e("Error deleteing type", e.toString());
+		}
+	}
+
+	public int getTypeCount() {
+
+		Cursor c = null;
+		try {
+			c = getReadableDatabase().rawQuery("SELECT count(*) FROM types", null);
+			if (0 >= c.getCount()) {
+				return 0;
+			}
+			c.moveToFirst();
+			return c.getInt(0);
+		} finally {
+			if (null != c) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+
+	public TypesCursor getType() {
+		String sql = TypesCursor.QUERY;
+		SQLiteDatabase d = getReadableDatabase();
+		TypesCursor c = (TypesCursor) d.rawQueryWithFactory(new TypesCursor.Factory(), sql, null, null);
+		c.moveToFirst();
+		return c;
+	}
+
 	/**
 	 * Item
+	 * 
 	 * @param id
 	 * @param name
 	 * @param condition
 	 */
-	public void addItem(int id, String name, String condition) {
+	public void addItem(int id, String type, String condition) {
 		ContentValues map = new ContentValues();
 		map.put("_id", id);
-		map.put("name", name);
+		map.put("type", type);
 		map.put("condition", condition);
 		try {
 			getWritableDatabase().insert("items", null, map);
@@ -350,7 +449,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			Log.e("Error writing new item", e.toString());
 		}
 	}
-	
+
 	public void deleteItem(int id) {
 		String[] whereArgs = new String[] { Integer.toString(id) };
 		try {
@@ -359,7 +458,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			Log.e("Error deleteing item", e.toString());
 		}
 	}
-	
+
 	public int getItemsCount() {
 
 		Cursor c = null;
@@ -379,18 +478,18 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			}
 		}
 	}
-	
+
 	public ItemsCursor getItems() {
-		String sql = WarehousesCursor.QUERY;
+		String sql = ItemsCursor.QUERY;
 		SQLiteDatabase d = getReadableDatabase();
 		ItemsCursor c = (ItemsCursor) d.rawQueryWithFactory(new ItemsCursor.Factory(), sql, null, null);
 		c.moveToFirst();
 		return c;
 	}
-	
-	
+
 	/**
 	 * Inactive
+	 * 
 	 * @param id
 	 * @param name
 	 * @param condition
@@ -399,23 +498,22 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		ContentValues map = new ContentValues();
 		map.put("warehouse", warehouse);
 		map.put("item", item);
-		map.put("amount", amount);
 		try {
 			getWritableDatabase().insert("inactive", null, map);
 		} catch (SQLException e) {
 			Log.e("Error writing new inactive", e.toString());
 		}
 	}
-	
-	public void deleteInactive(int warehouse, int item) {
-		String[] whereArgs = new String[] { Integer.toString(warehouse), Integer.toString(item) };
+
+	public void deleteInactive(int item) {
+		String[] whereArgs = new String[] { Integer.toString(item) };
 		try {
-			getWritableDatabase().delete("inactive", "warehouse=? AND item=?", whereArgs);
+			getWritableDatabase().delete("inactive", "item=?", whereArgs);
 		} catch (SQLException e) {
 			Log.e("Error deleteing inactive", e.toString());
 		}
 	}
-	
+
 	public int getInactiveCount() {
 
 		Cursor c = null;
@@ -435,43 +533,43 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			}
 		}
 	}
-	
+
 	public InactivesCursor getInactives() {
-		String sql = WarehousesCursor.QUERY;
+		String sql = InactivesCursor.QUERY;
 		SQLiteDatabase d = getReadableDatabase();
 		InactivesCursor c = (InactivesCursor) d.rawQueryWithFactory(new InactivesCursor.Factory(), sql, null, null);
 		c.moveToFirst();
 		return c;
 	}
-	
+
 	/**
 	 * Active
+	 * 
 	 * @param id
 	 * @param name
 	 * @param condition
 	 */
-	public void addActive(int warehouse, int item, int amount, String time) {
+	public void addActive(int warehouse, int item, String time) {
 		ContentValues map = new ContentValues();
 		map.put("warehouse", warehouse);
 		map.put("item", item);
-		map.put("amount", amount);
 		map.put("time", time);
 		try {
 			getWritableDatabase().insert("active", null, map);
 		} catch (SQLException e) {
-		Log.e("Error writing new active", e.toString());
+			Log.e("Error writing new active", e.toString());
 		}
 	}
-	
-	public void deleteActive(int warehouse, int item) {
-		String[] whereArgs = new String[] { Integer.toString(warehouse), Integer.toString(item) };
+
+	public void deleteActive(int item) {
+		String[] whereArgs = new String[] { Integer.toString(item) };
 		try {
-			getWritableDatabase().delete("active", "warehouse=? AND item=?", whereArgs);
+			getWritableDatabase().delete("active", "item=?", whereArgs);
 		} catch (SQLException e) {
 			Log.e("Error deleteing active", e.toString());
 		}
 	}
-	
+
 	public int getActiveCount() {
 
 		Cursor c = null;
@@ -491,17 +589,18 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			}
 		}
 	}
-	
+
 	public ActivesCursor getActives() {
-		String sql = WarehousesCursor.QUERY;
+		String sql = ActivesCursor.QUERY;
 		SQLiteDatabase d = getReadableDatabase();
 		ActivesCursor c = (ActivesCursor) d.rawQueryWithFactory(new ActivesCursor.Factory(), sql, null, null);
 		c.moveToFirst();
 		return c;
 	}
-	
+
 	/**
 	 * Person
+	 * 
 	 * @param id
 	 * @param name
 	 * @param condition
@@ -515,10 +614,10 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		try {
 			getWritableDatabase().insert("persons", null, map);
 		} catch (SQLException e) {
-		Log.e("Error writing new person", e.toString());
+			Log.e("Error writing new person", e.toString());
 		}
 	}
-	
+
 	public void deletePerson(int id) {
 		String[] whereArgs = new String[] { Integer.toString(id) };
 		try {
@@ -527,7 +626,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			Log.e("Error deleteing person", e.toString());
 		}
 	}
-	
+
 	public int getPersonCount() {
 
 		Cursor c = null;
@@ -547,18 +646,18 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			}
 		}
 	}
-	
+
 	public PersonsCursor getPersons() {
-		String sql = WarehousesCursor.QUERY;
+		String sql = PersonsCursor.QUERY;
 		SQLiteDatabase d = getReadableDatabase();
 		PersonsCursor c = (PersonsCursor) d.rawQueryWithFactory(new PersonsCursor.Factory(), sql, null, null);
 		c.moveToFirst();
 		return c;
 	}
-	
-	
+
 	/**
 	 * Lent
+	 * 
 	 * @param id
 	 * @param name
 	 * @param condition
@@ -567,24 +666,23 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		ContentValues map = new ContentValues();
 		map.put("person", person);
 		map.put("item", item);
-		map.put("amount", amount);
 		map.put("time", time);
 		try {
 			getWritableDatabase().insert("lent", null, map);
 		} catch (SQLException e) {
-		Log.e("Error writing new lent", e.toString());
+			Log.e("Error writing new lent", e.toString());
 		}
 	}
-	
-	public void deleteLent(int person, int item, String time) {
-		String[] whereArgs = new String[] { Integer.toString(person), Integer.toString(item), time };
+
+	public void deleteLent(int item) {
+		String[] whereArgs = new String[] { Integer.toString(item) };
 		try {
-			getWritableDatabase().delete("lent", "person=? AND item=? AND time=?", whereArgs);
+			getWritableDatabase().delete("lent", "time=?", whereArgs);
 		} catch (SQLException e) {
 			Log.e("Error deleteing lent", e.toString());
 		}
 	}
-	
+
 	public int getLentCount() {
 
 		Cursor c = null;
@@ -604,11 +702,67 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			}
 		}
 	}
-	
+
 	public LentsCursor getLents() {
-		String sql = WarehousesCursor.QUERY;
+		String sql = LentsCursor.QUERY;
 		SQLiteDatabase d = getReadableDatabase();
 		LentsCursor c = (LentsCursor) d.rawQueryWithFactory(new LentsCursor.Factory(), sql, null, null);
+		c.moveToFirst();
+		return c;
+	}
+
+	/**
+	 * Borrow
+	 * 
+	 * @param id
+	 * @param type
+	 * @param time
+	 */
+	public int addDonate(String type, String time) {
+		ContentValues map = new ContentValues();
+		map.put("type", type);
+		map.put("time", time);
+		try {
+			return (int) getWritableDatabase().insert("donate", null, map);
+		} catch (SQLException e) {
+			Log.e("Error writing new donate", e.toString());
+		}
+		return -1;
+	}
+
+	public void deleteDonate(int id) {
+		String[] whereArgs = new String[] { Integer.toString(id) };
+		try {
+			getWritableDatabase().delete("donate", "id=?", whereArgs);
+		} catch (SQLException e) {
+			Log.e("Error deleteing donate", e.toString());
+		}
+	}
+
+	public int getDonateCount() {
+
+		Cursor c = null;
+		try {
+			c = getReadableDatabase().rawQuery("SELECT count(*) FROM donate", null);
+			if (0 >= c.getCount()) {
+				return 0;
+			}
+			c.moveToFirst();
+			return c.getInt(0);
+		} finally {
+			if (null != c) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+
+	public DonatesCursor getDonates() {
+		String sql = DonatesCursor.QUERY;
+		SQLiteDatabase d = getReadableDatabase();
+		DonatesCursor c = (DonatesCursor) d.rawQueryWithFactory(new DonatesCursor.Factory(), sql, null, null);
 		c.moveToFirst();
 		return c;
 	}

@@ -1,6 +1,9 @@
 package org.teamrubiconusa.teamrubicon;
 
 import org.teamrubiconusa.teamrubicon.REST.RESTfulRequest;
+import org.teamrubiconusa.teamrubicon.dao.WarehouseDao;
+import org.teamrubiconusa.teamrubicon.model.Warehouse;
+
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -8,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class TeamRubicon extends FragmentActivity {
 
@@ -34,6 +38,10 @@ public class TeamRubicon extends FragmentActivity {
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
+		
+		WarehouseDao.getInstance().setContext(this.getApplicationContext());
+		WarehouseDao wd =  WarehouseDao.getInstance();
+		Toast.makeText(this, wd.getWarehouseById(1).toString(), Toast.LENGTH_LONG).show();
 	}
 	
 	@Override
@@ -50,7 +58,6 @@ public class TeamRubicon extends FragmentActivity {
 		
 		myRequest = new RESTfulRequest(this, progressBar);
 		myRequest.execute(URL);
-		
 	}
 
 	@Override

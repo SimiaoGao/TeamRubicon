@@ -7,11 +7,11 @@ import org.teamrubiconusa.teamrubicon.model.TeamRubiconDb;
 import org.teamrubiconusa.teamrubicon.model.Warehouse;
 
 import android.content.Context;
+import android.util.Log;
 
 public class WarehouseDao {
 
 	private static volatile WarehouseDao instance = null;
-	private Context context;
 	private TeamRubiconDb db;
 	private Map<Integer, Warehouse> warehouses = new HashMap<Integer, Warehouse>();
 	
@@ -39,11 +39,18 @@ public class WarehouseDao {
 		for (int rowNum = 0; rowNum < warehouseCursor.getCount(); rowNum++) {
 			warehouseCursor.moveToPosition(rowNum);
 			Warehouse temp = new Warehouse(warehouseCursor.getColId(), warehouseCursor.getColName(), warehouseCursor.getColLocation());
+			Log.i(WarehouseDao.this.getClass().getName(), temp.getId() + " " + temp.getName() + " " + temp.getLocation());
 			warehouses.put(warehouseCursor.getColId(), temp);
 		}
 	}
 	
 	public Warehouse getWarehouseById(int id) {
-		return warehouses.get(Integer.toString(id));
+		return warehouses.get(new Integer(id));
+	}
+	
+	public boolean addWarehouse(Warehouse warehouse) {
+		db.addWarehouse(warehouse.getId(), warehouse.getName(), warehouse.getLocation());
+		populateMap();
+		return true;
 	}
 }

@@ -1,46 +1,54 @@
 package org.teamrubiconusa.teamrubicon.model;
 
-public class Item {
+import java.util.Calendar;
+
+public class Donate {
 
 	int id;
-	String type;
-	String condition;
+	Type type;
+	Calendar time;
 	
-	public Item() {
+	public Donate() {
 		super();
 	}
-	
-	public Item(int id, String type, String condition) {
+
+	public Donate(Type type, Calendar time) {
+		super();
+		this.type = type;
+		this.time = time;
+	}
+
+	public Donate(int id, Type type, Calendar time) {
 		super();
 		this.id = id;
 		this.type = type;
-		this.condition = condition;
+		this.time = time;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	public String getType() {
+
+	public Type getType() {
 		return type;
 	}
-	
-	public void setType(String type) {
+
+	public void setType(Type type) {
 		this.type = type;
 	}
-	
-	public String getCondition() {
-		return condition;
+
+	public Calendar getTime() {
+		return time;
 	}
-	
-	public void setCondition(String condition) {
-		this.condition = condition;
+
+	public void setTime(Calendar time) {
+		this.time = time;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -48,7 +56,7 @@ public class Item {
 		result = prime * result + id;
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -57,14 +65,14 @@ public class Item {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Item other = (Item) obj;
+		Donate other = (Donate) obj;
 		if (id != other.id)
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", type=" + type + ", condition=" + condition + "]";
+		return "Donate [id=" + id + ", type=" + type + ", time=" + time + "]";
 	}
 }

@@ -11,7 +11,6 @@ import android.content.Context;
 public class PersonDao {
 
 	private static volatile PersonDao instance = null;
-	private Context context;
 	private TeamRubiconDb db;
 	private Map<Integer, Person> persons = new HashMap<Integer, Person>();
 	
