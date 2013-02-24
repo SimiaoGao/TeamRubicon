@@ -13,7 +13,7 @@ public class WarehouseDao {
 	private static volatile WarehouseDao instance = null;
 	private Context context;
 	private TeamRubiconDb db;
-	private static Map<Integer, Warehouse> warehouses = new HashMap<Integer, Warehouse>();
+	private Map<Integer, Warehouse> warehouses = new HashMap<Integer, Warehouse>();
 	
 	private WarehouseDao() {
 	}
@@ -43,7 +43,7 @@ public class WarehouseDao {
 		}
 	}
 	
-	public static Warehouse getWarehouseById(int id) {
+	public Warehouse getWarehouseById(int id) {
 		return warehouses.get(Integer.toString(id));
 	}
 }

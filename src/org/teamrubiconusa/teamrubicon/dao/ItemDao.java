@@ -13,7 +13,7 @@ public class ItemDao {
 	private static volatile ItemDao instance = null;
 	private Context context;
 	private TeamRubiconDb db;
-	private static Map<Integer, Item> items = new HashMap<Integer, Item>();
+	private Map<Integer, Item> items = new HashMap<Integer, Item>();
 	
 	private ItemDao() {
 	}
@@ -43,7 +43,7 @@ public class ItemDao {
 		}
 	}
 	
-	public static Item getItemById(int id) {
+	public Item getItemById(int id) {
 		return items.get(Integer.toString(id));
 	}
 }

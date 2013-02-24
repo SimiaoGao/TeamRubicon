@@ -41,8 +41,8 @@ public class ActiveDao {
 		for (int rowNum = 0; rowNum < activeCursor.getCount(); rowNum++) {
 			activeCursor.moveToPosition(rowNum);
 			
-			Active temp = new Active(WarehouseDao.getWarehouseById(activeCursor.getColWarehouseId()), 
-									 ItemDao.getItemById(activeCursor.getColItemId()), 
+			Active temp = new Active(WarehouseDao.getInstance().getWarehouseById(activeCursor.getColWarehouseId()), 
+									 ItemDao.getInstance().getItemById(activeCursor.getColItemId()), 
 									activeCursor.getColAmount() ,stringToCalendar(activeCursor.getColTime()));
 			actives.add(temp);
 		}
