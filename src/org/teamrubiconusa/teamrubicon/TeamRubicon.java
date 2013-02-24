@@ -1,26 +1,26 @@
 package org.teamrubiconusa.teamrubicon;
 
-import java.util.Locale;
-
+import org.teamrubiconusa.teamrubicon.REST.RESTfulRequest;
+import com.viewpagerindicator.CirclePageIndicator;
+import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
 public class TeamRubicon extends FragmentActivity {
 
-	RubiconPagerAdapter mSectionsPagerAdapter;
-	ViewPager mViewPager;
+	private RubiconPagerAdapter mSectionsPagerAdapter;
+	private ViewPager mViewPager;
+	
+    private ProgressBar progressBar;
+    private RESTfulRequest myRequest;
+    
+    private ActionBar actionBar;
+    
+    private static String URL = "http://54.235.71.143/htm/rest_home.php/person.xml";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +29,38 @@ public class TeamRubicon extends FragmentActivity {
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
-		mSectionsPagerAdapter = new RubiconPagerAdapter(
-				getSupportFragmentManager());
+		mSectionsPagerAdapter = new RubiconPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		
 
+	    //Bind the title indicator to the adapter
+	    CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
+	    indicator.setViewPager(mViewPager);
+	    
+	    indicator.setBackgroundColor(0xffffffff);
+        indicator.setStrokeColor(0xff888888);
+        indicator.setFillColor(0xff888888);
+
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		
+		actionBar = getActionBar();
+		View mActionBarView = getLayoutInflater().inflate(R.layout.progress_layout, null);
+		actionBar.setCustomView(mActionBarView);
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		
+		progressBar = (ProgressBar) this.findViewById(R.id.action_bar_progress);
+
+		
+		myRequest = new RESTfulRequest(this, progressBar);
+		myRequest.execute(URL);
+		
 	}
 
 	@Override
@@ -44,4 +69,6 @@ public class TeamRubicon extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.team_rubicon, menu);
 		return true;
 	}
+	
+
 }
