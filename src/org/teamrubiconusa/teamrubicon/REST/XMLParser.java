@@ -18,6 +18,7 @@ import org.teamrubiconusa.teamrubicon.dao.WarehouseDao;
 import org.teamrubiconusa.teamrubicon.model.Active;
 import org.teamrubiconusa.teamrubicon.model.Item;
 import org.teamrubiconusa.teamrubicon.model.Person;
+import org.teamrubiconusa.teamrubicon.model.TeamRubiconDb;
 import org.teamrubiconusa.teamrubicon.model.Warehouse;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -49,6 +50,8 @@ public class XMLParser extends AsyncTask<String, Integer, Void>{
 	//SqlLite variables
 	private static LocationDataSource sqlLiteDatabase;
 	private final Collection<DataLoaderListener> listeners = new LinkedList<DataLoaderListener>();
+	
+	public TeamRubiconDb myRubiconDB;
 
 
 	public XMLParser(ProgressBar progress, Activity parent, int modelType, DataLoaderListener dll){
@@ -56,6 +59,8 @@ public class XMLParser extends AsyncTask<String, Integer, Void>{
 		this.parent = parent;
 		this.modelType = modelType;
 		listeners.add(dll);
+		
+		myRubiconDB = new TeamRubiconDb(parent.getApplicationContext());
     	//Open our database connection
     	if(sqlLiteDatabase == null){
     		sqlLiteDatabase = new LocationDataSource(parent.getApplicationContext());
@@ -83,7 +88,7 @@ public class XMLParser extends AsyncTask<String, Integer, Void>{
     }
 	
 	public void parseText(String xml){
-		sqlLiteDatabase.deleteAllEvents();
+		
 		Document doc = getDomElement(xml);
 		 
 		//The list is in 'Row' elements
@@ -128,13 +133,15 @@ public class XMLParser extends AsyncTask<String, Integer, Void>{
 			}
 			break;
 		case PERSON:
+			//myRubiconDB.deleteAllPersons();
 			for (int i = 0; i < nl.getLength(); i++) {
 				Element e = (Element) nl.item(i);
 				PersonDao pd = PersonDao.getInstance();
-				pd.addPerson(new Person(Integer.parseInt(getValue(e, "id")),
-										getValue(e, "name"),
-										getValue(e, "title"),
-										getValue(e, "phone")));
+				Person person = new Person(Integer.parseInt(getValue(e, "id")),
+						getValue(e, "name"),
+						getValue(e, "title"),
+						getValue(e, "phone"));
+				pd.addPerson(person);
 			}
 			break;
 		case ACTIVE:

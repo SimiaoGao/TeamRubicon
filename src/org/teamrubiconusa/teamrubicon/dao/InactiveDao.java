@@ -34,14 +34,14 @@ public class InactiveDao {
 	}
 	
 	private void populateMap() {
-		TeamRubiconDb.InactivesCursor inactiveCursor = db.getInactives();
-		for (int rowNum = 0; rowNum < inactiveCursor.getCount(); rowNum++) {
-			inactiveCursor.moveToPosition(rowNum);
-			
-			Inactive temp = new Inactive(WarehouseDao.getInstance().getWarehouseById(inactiveCursor.getColWarehouseId()), 
-									 ItemDao.getInstance().getItemById(inactiveCursor.getColItemId()));
-			inactives.add(temp);
-		}
+//		TeamRubiconDb.InactivesCursor inactiveCursor = db.getInactives();
+//		for (int rowNum = 0; rowNum < inactiveCursor.getCount(); rowNum++) {
+//			inactiveCursor.moveToPosition(rowNum);
+//			
+//			Inactive temp = new Inactive(WarehouseDao.getInstance().getWarehouseById(inactiveCursor.getColWarehouseId()), 
+//									 ItemDao.getInstance().getItemById(inactiveCursor.getColItemId()));
+//			inactives.add(temp);
+//		}
 	}
 	
 	public List<Inactive> getAllInactives() {

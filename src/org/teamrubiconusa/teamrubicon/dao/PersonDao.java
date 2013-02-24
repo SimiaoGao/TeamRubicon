@@ -43,12 +43,17 @@ public class PersonDao {
 		}
 	}
 	
+	public Map<Integer, Person> getPersonMap(){
+		return persons;
+	}
+	
 	public Person getPersonById(int id) {
 		return persons.get(new Integer(id));
 	}
 	 
 	public boolean addPerson(Person person) {
 		if (persons.get(person.getId()) == null) {
+			person.getId();
 			db.addPerson(person.getId(), person.getName(), person.getRole(), person.getPhone());
 			persons.put(person.getId(), person);
 			return true;

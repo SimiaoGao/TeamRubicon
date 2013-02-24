@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.teamrubiconusa.teamrubicon.R;
 import org.teamrubiconusa.teamrubicon.WallaceModels.Event;
+import org.teamrubiconusa.teamrubicon.adapters.DonateListAdapter.RowHolder;
+import org.teamrubiconusa.teamrubicon.model.Person;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,11 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class EventListAdapter extends ArrayAdapter<Event> {
+public class PersonListAdapter extends ArrayAdapter<Person> {
 	  private final Context context;
-	  private final List<Event> values;
+	  private final List<Person> values;
 
-	  public EventListAdapter(Context context, List<Event> values) {
+	  public PersonListAdapter(Context context, List<Person> values) {
 	    super(context, R.layout.activity_team_rubicon, values);
 	    this.context = context;
 	    this.values = values;
@@ -24,8 +26,8 @@ public class EventListAdapter extends ArrayAdapter<Event> {
 	  
 	  static class RowHolder
 	  {
-		  protected TextView eventName;
-		  protected TextView eventLocation;
+		  protected TextView personName;
+		  protected TextView personRole;
 	  }
 
 	  @Override
@@ -35,18 +37,18 @@ public class EventListAdapter extends ArrayAdapter<Event> {
 			            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			    convertView = inflater.inflate(R.layout.row_layout, null);
 		      RowHolder holder = new RowHolder();
-		      holder.eventName = (TextView) convertView.findViewById(R.id.name);
-		      holder.eventLocation = (TextView) convertView.findViewById(R.id.location);
+		      holder.personName = (TextView) convertView.findViewById(R.id.name);
+		      holder.personRole = (TextView) convertView.findViewById(R.id.location);
 		      convertView.setTag(holder);
 		  }
 		  RowHolder holder = (RowHolder) convertView.getTag();
-		  String tmpEventName = values.get(position).getEventName();
-		  String tmpEventLocation = values.get(position).getEventLocation();
-		  long id = values.get(position).getId();
+		  String tmpPersonName = values.get(position).getName();
+		  String tmpPersonRole = values.get(position).getRole();
+//		  long id = values.get(position).getId();
 		  
 		  
-		  holder.eventName.setText(tmpEventName);
-		  holder.eventLocation.setText(tmpEventLocation);
+		  holder.personName.setText(tmpPersonName);
+		  holder.personRole.setText(tmpPersonRole);
 		    
 	    return convertView;
 	  }

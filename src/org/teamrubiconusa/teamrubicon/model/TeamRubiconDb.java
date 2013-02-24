@@ -623,6 +623,14 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		}
 	}
 
+	public void deleteAllPersons() {
+		try {
+			getWritableDatabase().delete("persons", null, null);
+		} catch (SQLException e) {
+			Log.e("Error deleteing all persons", e.toString());
+		}
+	}
+
 	public int getPersonCount() {
 
 		Cursor c = null;
@@ -732,6 +740,14 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			getWritableDatabase().delete("donate", "id=?", whereArgs);
 		} catch (SQLException e) {
 			Log.e("Error deleteing donate", e.toString());
+		}
+	}
+	
+	public void deleteAllDonates() {
+		try {
+			getWritableDatabase().delete("donate", null, null);
+		} catch (SQLException e) {
+			Log.e("Error deleteing all donates", e.toString());
 		}
 	}
 

@@ -129,6 +129,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Add Item" />
+   
+   <ListView
+        android:id="@+id/donation_List"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_weight="1">
+    </ListView>
             
     
 

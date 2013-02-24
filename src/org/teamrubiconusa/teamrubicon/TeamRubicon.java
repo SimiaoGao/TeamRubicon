@@ -1,12 +1,16 @@
 package org.teamrubiconusa.teamrubicon;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.teamrubiconusa.teamrubicon.REST.RESTfulRequest;
 import org.teamrubiconusa.teamrubicon.REST.XMLParser;
+import org.teamrubiconusa.teamrubicon.dao.DonateDao;
 import org.teamrubiconusa.teamrubicon.dao.ItemDao;
 import org.teamrubiconusa.teamrubicon.dao.PersonDao;
 import org.teamrubiconusa.teamrubicon.dao.WarehouseDao;
+import org.teamrubiconusa.teamrubicon.model.Person;
 
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -14,6 +18,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -51,6 +56,7 @@ public class TeamRubicon extends FragmentActivity implements DataLoaderListener 
 	public void onResume(){
 		super.onResume();
 		
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		actionBar = getActionBar();
 		View mActionBarView = getLayoutInflater().inflate(R.layout.progress_layout, null);
 		actionBar.setCustomView(mActionBarView);
@@ -61,8 +67,9 @@ public class TeamRubicon extends FragmentActivity implements DataLoaderListener 
 
 		myRequest = new RESTfulRequest(this, progressBar, XMLParser.PERSON, this);
 		myRequest.execute(URL);
-		//Toast.makeText(this, WarehouseDao.getInstance().getWarehouseById(1).toString(), Toast.LENGTH_LONG);
 
+		
+		DonateDao.getInstance().getAllDonates();
 	}
 
 	@Override
@@ -86,7 +93,7 @@ public class TeamRubicon extends FragmentActivity implements DataLoaderListener 
 			Toast.makeText(this, ItemDao.getInstance().getItemById(1).toString(), Toast.LENGTH_LONG).show();
 			break;
 		case XMLParser.PERSON:
-			Toast.makeText(this, PersonDao.getInstance().getPersonById(1).toString(), Toast.LENGTH_LONG).show();
+			ViewPagerAdapter.notifyAdapterOfChange();
 			break;
 		case XMLParser.ACTIVE:
 			break;

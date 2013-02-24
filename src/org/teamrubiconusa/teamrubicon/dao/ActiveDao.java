@@ -36,15 +36,15 @@ public class ActiveDao {
 	}
 	
 	private void populateMap() {
-		TeamRubiconDb.ActivesCursor activeCursor = db.getActives();
-		for (int rowNum = 0; rowNum < activeCursor.getCount(); rowNum++) {
-			activeCursor.moveToPosition(rowNum);
-			
-			Active temp = new Active(WarehouseDao.getInstance().getWarehouseById(activeCursor.getColWarehouseId()), 
-									 ItemDao.getInstance().getItemById(activeCursor.getColItemId()), 
-									 stringToCalendar(activeCursor.getColTime()));
-			actives.add(temp);
-		}
+//		TeamRubiconDb.ActivesCursor activeCursor = db.getActives();
+//		for (int rowNum = 0; rowNum < activeCursor.getCount(); rowNum++) {
+//			activeCursor.moveToPosition(rowNum);
+//			
+//			Active temp = new Active(WarehouseDao.getInstance().getWarehouseById(activeCursor.getColWarehouseId()), 
+//									 ItemDao.getInstance().getItemById(activeCursor.getColItemId()), 
+//									 stringToCalendar(activeCursor.getColTime()));
+//			actives.add(temp);
+//		}
 	}
 	
 	private static Calendar stringToCalendar(String time) {
