@@ -3,10 +3,8 @@ package org.teamrubiconusa.teamrubicon.adapters;
 import java.util.List;
 
 import org.teamrubiconusa.teamrubicon.R;
-import org.teamrubiconusa.teamrubicon.WallaceModels.Event;
 import org.teamrubiconusa.teamrubicon.adapters.DonateListAdapter.RowHolder;
 import org.teamrubiconusa.teamrubicon.model.Person;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

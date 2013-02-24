@@ -2,12 +2,8 @@ package org.teamrubiconusa.teamrubicon.adapters;
 
 import java.util.Calendar;
 import java.util.List;
-
 import org.teamrubiconusa.teamrubicon.R;
-import org.teamrubiconusa.teamrubicon.WallaceModels.Event;
 import org.teamrubiconusa.teamrubicon.model.Donate;
-import org.teamrubiconusa.teamrubicon.model.Type;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

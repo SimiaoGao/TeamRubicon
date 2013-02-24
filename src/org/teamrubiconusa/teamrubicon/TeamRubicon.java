@@ -64,12 +64,10 @@ public class TeamRubicon extends FragmentActivity implements DataLoaderListener 
 		
 		progressBar = (ProgressBar) this.findViewById(R.id.action_bar_progress);
 
-
+		
 		myRequest = new RESTfulRequest(this, progressBar, XMLParser.PERSON, this);
 		myRequest.execute(URL);
 
-		
-		DonateDao.getInstance().getAllDonates();
 	}
 
 	@Override

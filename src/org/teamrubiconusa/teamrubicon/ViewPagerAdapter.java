@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
-import org.teamrubiconusa.teamrubicon.WallaceDB.LocationDataSource;
-import org.teamrubiconusa.teamrubicon.WallaceModels.Event;
 import org.teamrubiconusa.teamrubicon.adapters.DonateListAdapter;
 import org.teamrubiconusa.teamrubicon.adapters.PersonListAdapter;
 import org.teamrubiconusa.teamrubicon.dao.DonateDao;
@@ -14,7 +11,6 @@ import org.teamrubiconusa.teamrubicon.dao.PersonDao;
 import org.teamrubiconusa.teamrubicon.model.Donate;
 import org.teamrubiconusa.teamrubicon.model.Person;
 import org.teamrubiconusa.teamrubicon.model.TeamRubiconDb;
-
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -46,18 +42,12 @@ public class ViewPagerAdapter extends PagerAdapter implements OnItemClickListene
 	//Old list of notes that was used before I had the database up
 	//private List<NoteRow> rowList = new ArrayList<NoteRow>();
 	
-	//Define a NoteRow
-	private Event rowData;	
-	
 	//Calendar for date/time info
 	private static final Calendar c = Calendar.getInstance();
 	private static String date;
 	private static String time;
 	
 	public static ListView eventList;
-	
-	//SqlLite variables
-	private static LocationDataSource sqlLiteDatabase;
 	
 	// Used to vibrate the phone upon longItemClick
 	Vibrator vibrator;

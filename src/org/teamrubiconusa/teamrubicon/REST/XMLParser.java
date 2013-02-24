@@ -4,13 +4,10 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.Collection;
 import java.util.LinkedList;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.teamrubiconusa.teamrubicon.DataLoaderListener;
-import org.teamrubiconusa.teamrubicon.WallaceDB.LocationDataSource;
 import org.teamrubiconusa.teamrubicon.dao.ItemDao;
 import org.teamrubiconusa.teamrubicon.dao.PersonDao;
 import org.teamrubiconusa.teamrubicon.dao.TypeDao;
@@ -26,7 +23,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -47,8 +43,6 @@ public class XMLParser extends AsyncTask<String, Integer, Void>{
 	private int modelType;
 	private Activity parent;
 	
-	//SqlLite variables
-	private static LocationDataSource sqlLiteDatabase;
 	private final Collection<DataLoaderListener> listeners = new LinkedList<DataLoaderListener>();
 	
 	public TeamRubiconDb myRubiconDB;
@@ -61,11 +55,6 @@ public class XMLParser extends AsyncTask<String, Integer, Void>{
 		listeners.add(dll);
 		
 		myRubiconDB = new TeamRubiconDb(parent.getApplicationContext());
-    	//Open our database connection
-    	if(sqlLiteDatabase == null){
-    		sqlLiteDatabase = new LocationDataSource(parent.getApplicationContext());
-    		sqlLiteDatabase.open();
-    	}
  	}
 	
 	public void addDataLoadingListener(DataLoaderListener d) {

@@ -1,6 +1,5 @@
 package org.teamrubiconusa.teamrubicon;
 
-import org.teamrubiconusa.teamrubicon.WallaceModels.Event;
 import org.teamrubiconusa.teamrubicon.model.Person;
 
 import android.app.DialogFragment;
