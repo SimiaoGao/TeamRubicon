@@ -46,8 +46,8 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		}
 
 		/* Accessor functions -- one per database column */
-		public long getColId() {
-			return getLong(getColumnIndexOrThrow("_id"));
+		public int getColId() {
+			return getInt(getColumnIndexOrThrow("_id"));
 		}
 
 		public String getColName() {
@@ -78,8 +78,8 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		}
 
 		/* Accessor functions -- one per database column */
-		public long getColId() {
-			return getLong(getColumnIndexOrThrow("_id"));
+		public int getColId() {
+			return getInt(getColumnIndexOrThrow("_id"));
 		}
 
 		public String getColName() {
@@ -112,17 +112,17 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		/* Accessor functions -- one per database column */
 
 		/** foreign key column */
-		public long getColWarehouse() {
-			return getLong(getColumnIndexOrThrow("warehouse"));
+		public int getColWarehouse() {
+			return getInt(getColumnIndexOrThrow("warehouse"));
 		}
 
 		/** foreign key column */
-		public String getColItem() {
-			return getString(getColumnIndexOrThrow("item"));
+		public int getColItem() {
+			return getInt(getColumnIndexOrThrow("item"));
 		}
 		
-		public String getColAmount() {
-			return getString(getColumnIndexOrThrow("amount"));
+		public int getColAmount() {
+			return getInt(getColumnIndexOrThrow("amount"));
 		}
 	}
 	
@@ -147,17 +147,17 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		/* Accessor functions -- one per database column */
 
 		/** foreign key column */
-		public long getColWarehouse() {
-			return getLong(getColumnIndexOrThrow("warehouse"));
+		public int getColWarehouse() {
+			return getInt(getColumnIndexOrThrow("warehouse"));
 		}
 
 		/** foreign key column */
-		public String getColItem() {
-			return getString(getColumnIndexOrThrow("item"));
+		public int getColItem() {
+			return getInt(getColumnIndexOrThrow("item"));
 		}
 		
-		public String getColAmount() {
-			return getString(getColumnIndexOrThrow("amount"));
+		public int getColAmount() {
+			return getInt(getColumnIndexOrThrow("amount"));
 		}
 		
 		public String getColTime() {
@@ -184,8 +184,8 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		}
 
 		/* Accessor functions -- one per database column */
-		public long getColId() {
-			return getLong(getColumnIndexOrThrow("_id"));
+		public int getColId() {
+			return getInt(getColumnIndexOrThrow("_id"));
 		}
 
 		public String getColName() {
@@ -203,7 +203,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 	
 	public static class LentCursor extends SQLiteCursor {
 		/** The query for this cursor */
-		private static final String QUERY = "SELECT person, amount, time FROM lent";
+		private static final String QUERY = "SELECT person, item, amount, time FROM lent";
 
 		/** Cursor constructor */
 		LentCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
@@ -222,12 +222,17 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		/* Accessor functions -- one per database column */
 
 		/** foreign key column */
-		public long getColPerson() {
-			return getLong(getColumnIndexOrThrow("person"));
+		public int getColPerson() {
+			return getInt(getColumnIndexOrThrow("person"));
 		}
 
-		public String getColAmount() {
-			return getString(getColumnIndexOrThrow("amount"));
+		/** foreign key column */
+		public int getColItem() {
+			return getInt(getColumnIndexOrThrow("item"));
+		}
+		
+		public int getColAmount() {
+			return getInt(getColumnIndexOrThrow("amount"));
 		}
 		
 		public String getColTime() {
@@ -558,9 +563,10 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 	 * @param name
 	 * @param condition
 	 */
-	public void addLent(int person, int amount, String time) {
+	public void addLent(int person, int item, int amount, String time) {
 		ContentValues map = new ContentValues();
 		map.put("person", person);
+		map.put("item", item);
 		map.put("amount", amount);
 		map.put("time", time);
 		try {
@@ -570,10 +576,10 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		}
 	}
 	
-	public void deleteLent(int id, String time) {
-		String[] whereArgs = new String[] { Integer.toString(id), time };
+	public void deleteLent(int person, int item, String time) {
+		String[] whereArgs = new String[] { Integer.toString(person), Integer.toString(item), time };
 		try {
-			getWritableDatabase().delete("lent", "person=? AND time=?", whereArgs);
+			getWritableDatabase().delete("lent", "person=? AND item=? AND time=?", whereArgs);
 		} catch (SQLException e) {
 			Log.e("Error deleteing lent", e.toString());
 		}

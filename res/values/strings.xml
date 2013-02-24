@@ -16,7 +16,7 @@
  		CREATE TABLE active (warehouse INTEGER, item INTEGER, amount INTEGER, time TEXT NOT NULL, FOREIGN KEY(warehouse) REFERENCES warehouses(_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(item) REFERENCES items(_id) ON DELETE CASCADE ON UPDATE CASCADE);
  		
  		CREATE TABLE persons ( _id INTEGER PRIMARY KEY, name TEXT NOT NULL, role TEXT NOT NULL, phone TEXT UNIQUE);
-		CREATE TABLE lent (person INTEGER, amount INTEGER NOT NULL, time TEXT NOT NULL, FOREIGN KEY(person) REFERENCES persons(_id) ON DELETE CASCADE ON UPDATE CASCADE);
+		CREATE TABLE lent (person INTEGER, item INTEGER, amount INTEGER NOT NULL, time TEXT NOT NULL, FOREIGN KEY(person) REFERENCES persons(_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(item) REFERENCES items(_id) ON DELETE CASCADE ON UPDATE CASCADE);
 		
         INSERT INTO warehouses (_id, name, location) VALUES (1, 'PennWare10', '48 Broad St, Philadelphia, PA 12934');
         INSERT INTO items (_id, name, condition) VALUES (1, 'Hammer','');
