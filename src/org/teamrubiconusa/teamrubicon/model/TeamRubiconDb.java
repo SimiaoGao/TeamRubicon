@@ -90,80 +90,6 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			return getString(getColumnIndexOrThrow("condition"));
 		}
 	}
-
-	public static class InactiveCursor extends SQLiteCursor {
-		/** The query for this cursor */
-		private static final String QUERY = "SELECT warehouse, item, amount FROM inactive";
-
-		/** Cursor constructor */
-		InactiveCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
-			super(db, driver, editTable, query);
-		}
-
-		/** Private factory class necessary for rawQueryWithFactory() call */
-		private static class Factory implements SQLiteDatabase.CursorFactory {
-			
-			@Override
-			public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
-				return new InactiveCursor(db, driver, editTable, query);
-			}
-		}
-
-		/* Accessor functions -- one per database column */
-
-		/** foreign key column */
-		public int getColWarehouse() {
-			return getInt(getColumnIndexOrThrow("warehouse"));
-		}
-
-		/** foreign key column */
-		public int getColItem() {
-			return getInt(getColumnIndexOrThrow("item"));
-		}
-		
-		public int getColAmount() {
-			return getInt(getColumnIndexOrThrow("amount"));
-		}
-	}
-	
-	public static class ActiveCursor extends SQLiteCursor {
-		/** The query for this cursor */
-		private static final String QUERY = "SELECT warehouse, item, amount, time FROM active";
-
-		/** Cursor constructor */
-		ActiveCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
-			super(db, driver, editTable, query);
-		}
-
-		/** Private factory class necessary for rawQueryWithFactory() call */
-		private static class Factory implements SQLiteDatabase.CursorFactory {
-			
-			@Override
-			public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
-				return new ActiveCursor(db, driver, editTable, query);
-			}
-		}
-
-		/* Accessor functions -- one per database column */
-
-		/** foreign key column */
-		public int getColWarehouse() {
-			return getInt(getColumnIndexOrThrow("warehouse"));
-		}
-
-		/** foreign key column */
-		public int getColItem() {
-			return getInt(getColumnIndexOrThrow("item"));
-		}
-		
-		public int getColAmount() {
-			return getInt(getColumnIndexOrThrow("amount"));
-		}
-		
-		public String getColTime() {
-			return getString(getColumnIndexOrThrow("time"));
-		}
-	}
 	
 	public static class PersonsCursor extends SQLiteCursor {
 		/** The query for this cursor */
@@ -200,13 +126,13 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			return getString(getColumnIndexOrThrow("phone"));
 		}
 	}
-	
-	public static class LentCursor extends SQLiteCursor {
+
+	public static class InactivesCursor extends SQLiteCursor {
 		/** The query for this cursor */
-		private static final String QUERY = "SELECT person, item, amount, time FROM lent";
+		private static final String QUERY = "SELECT warehouse, item, amount FROM inactive";
 
 		/** Cursor constructor */
-		LentCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+		InactivesCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
 			super(db, driver, editTable, query);
 		}
 
@@ -215,19 +141,93 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 			
 			@Override
 			public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
-				return new LentCursor(db, driver, editTable, query);
+				return new InactivesCursor(db, driver, editTable, query);
 			}
 		}
 
 		/* Accessor functions -- one per database column */
 
 		/** foreign key column */
-		public int getColPerson() {
+		public int getColWarehouseId() {
+			return getInt(getColumnIndexOrThrow("warehouse"));
+		}
+
+		/** foreign key column */
+		public int getColItemId() {
+			return getInt(getColumnIndexOrThrow("item"));
+		}
+		
+		public int getColAmount() {
+			return getInt(getColumnIndexOrThrow("amount"));
+		}
+	}
+	
+	public static class ActivesCursor extends SQLiteCursor {
+		/** The query for this cursor */
+		private static final String QUERY = "SELECT warehouse, item, amount, time FROM active";
+
+		/** Cursor constructor */
+		ActivesCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+			super(db, driver, editTable, query);
+		}
+
+		/** Private factory class necessary for rawQueryWithFactory() call */
+		private static class Factory implements SQLiteDatabase.CursorFactory {
+			
+			@Override
+			public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+				return new ActivesCursor(db, driver, editTable, query);
+			}
+		}
+
+		/* Accessor functions -- one per database column */
+
+		/** foreign key column */
+		public int getColWarehouseId() {
+			return getInt(getColumnIndexOrThrow("warehouse"));
+		}
+
+		/** foreign key column */
+		public int getColItemId() {
+			return getInt(getColumnIndexOrThrow("item"));
+		}
+		
+		public int getColAmount() {
+			return getInt(getColumnIndexOrThrow("amount"));
+		}
+		
+		public String getColTime() {
+			return getString(getColumnIndexOrThrow("time"));
+		}
+	}
+	
+	public static class LentsCursor extends SQLiteCursor {
+		/** The query for this cursor */
+		private static final String QUERY = "SELECT person, item, amount, time FROM lent";
+
+		/** Cursor constructor */
+		LentsCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+			super(db, driver, editTable, query);
+		}
+
+		/** Private factory class necessary for rawQueryWithFactory() call */
+		private static class Factory implements SQLiteDatabase.CursorFactory {
+			
+			@Override
+			public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
+				return new LentsCursor(db, driver, editTable, query);
+			}
+		}
+
+		/* Accessor functions -- one per database column */
+
+		/** foreign key column */
+		public int getColPersonId() {
 			return getInt(getColumnIndexOrThrow("person"));
 		}
 
 		/** foreign key column */
-		public int getColItem() {
+		public int getColItemId() {
 			return getInt(getColumnIndexOrThrow("item"));
 		}
 		
@@ -436,10 +436,10 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		}
 	}
 	
-	public InactiveCursor getInactive() {
+	public InactivesCursor getInactives() {
 		String sql = WarehousesCursor.QUERY;
 		SQLiteDatabase d = getReadableDatabase();
-		InactiveCursor c = (InactiveCursor) d.rawQueryWithFactory(new InactiveCursor.Factory(), sql, null, null);
+		InactivesCursor c = (InactivesCursor) d.rawQueryWithFactory(new InactivesCursor.Factory(), sql, null, null);
 		c.moveToFirst();
 		return c;
 	}
@@ -492,10 +492,10 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		}
 	}
 	
-	public ActiveCursor getActive() {
+	public ActivesCursor getActives() {
 		String sql = WarehousesCursor.QUERY;
 		SQLiteDatabase d = getReadableDatabase();
-		ActiveCursor c = (ActiveCursor) d.rawQueryWithFactory(new ActiveCursor.Factory(), sql, null, null);
+		ActivesCursor c = (ActivesCursor) d.rawQueryWithFactory(new ActivesCursor.Factory(), sql, null, null);
 		c.moveToFirst();
 		return c;
 	}
@@ -548,7 +548,7 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		}
 	}
 	
-	public PersonsCursor getPerson() {
+	public PersonsCursor getPersons() {
 		String sql = WarehousesCursor.QUERY;
 		SQLiteDatabase d = getReadableDatabase();
 		PersonsCursor c = (PersonsCursor) d.rawQueryWithFactory(new PersonsCursor.Factory(), sql, null, null);
@@ -605,10 +605,10 @@ public class TeamRubiconDb extends SQLiteOpenHelper {
 		}
 	}
 	
-	public LentCursor getLent() {
+	public LentsCursor getLents() {
 		String sql = WarehousesCursor.QUERY;
 		SQLiteDatabase d = getReadableDatabase();
-		LentCursor c = (LentCursor) d.rawQueryWithFactory(new LentCursor.Factory(), sql, null, null);
+		LentsCursor c = (LentsCursor) d.rawQueryWithFactory(new LentsCursor.Factory(), sql, null, null);
 		c.moveToFirst();
 		return c;
 	}

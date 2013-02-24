@@ -13,7 +13,7 @@ public class WarehouseDao {
 	private static volatile WarehouseDao instance = null;
 	private Context context;
 	private TeamRubiconDb db;
-	private Map<String, Warehouse> warehouses = new HashMap<String, Warehouse>();
+	private static Map<Integer, Warehouse> warehouses = new HashMap<Integer, Warehouse>();
 	
 	private WarehouseDao() {
 	}
@@ -39,7 +39,11 @@ public class WarehouseDao {
 		for (int rowNum = 0; rowNum < warehouseCursor.getCount(); rowNum++) {
 			warehouseCursor.moveToPosition(rowNum);
 			Warehouse temp = new Warehouse(warehouseCursor.getColId(), warehouseCursor.getColName(), warehouseCursor.getColLocation());
-			warehouses.put(warehouseCursor.getColName(), temp);
+			warehouses.put(warehouseCursor.getColId(), temp);
 		}
+	}
+	
+	public static Warehouse getWarehouseById(int id) {
+		return warehouses.get(Integer.toString(id));
 	}
 }
