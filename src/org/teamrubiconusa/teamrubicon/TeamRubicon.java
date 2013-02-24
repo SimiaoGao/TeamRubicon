@@ -36,11 +36,6 @@ public class TeamRubicon extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-
-		
-		ActiveDao.getInstance().setContext(this.getApplicationContext());
-		ActiveDao wd =  ActiveDao.getInstance();
-		Toast.makeText(this, wd.getAllActives().get(0).toString(), Toast.LENGTH_LONG).show();
 	}
 	
 	@Override
