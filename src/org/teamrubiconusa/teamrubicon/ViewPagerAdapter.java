@@ -7,31 +7,19 @@ import java.util.List;
 import org.teamrubiconusa.teamrubicon.WallaceDB.LocationDataSource;
 import org.teamrubiconusa.teamrubicon.WallaceModels.Event;
 import org.teamrubiconusa.teamrubicon.adapters.EventListAdapter;
-
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Parcelable;
 import android.os.Vibrator;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-public class ViewPagerAdapter extends PagerAdapter
+public class ViewPagerAdapter extends PagerAdapter implements OnItemClickListener
 {	
 	//list adapter
 	public static EventListAdapter listAdapter;
@@ -47,7 +35,7 @@ public class ViewPagerAdapter extends PagerAdapter
 	private static String date;
 	private static String time;
 	
-	public static ListView noteList;
+	public static ListView eventList;
 	
 	//SqlLite variables
 	private static LocationDataSource sqlLiteDatabase;
@@ -58,7 +46,7 @@ public class ViewPagerAdapter extends PagerAdapter
 	
 	//Returns the number of panes in the ViewPager
     public int getCount() {
-        return 2;
+        return 3;
     }
      
 	@Override
@@ -84,8 +72,13 @@ public class ViewPagerAdapter extends PagerAdapter
             view = inflater.inflate(resId, null);
             
             break;
-        case 1:
+        case 1:        	
             resId = R.layout.second_pane;
+            view = inflater.inflate(resId, null);
+            
+            break;
+        case 2:
+            resId = R.layout.third_pane;
             view = inflater.inflate(resId, null);
 
             //Get all of the notes
@@ -95,20 +88,30 @@ public class ViewPagerAdapter extends PagerAdapter
 		    } else{
 		    	List<Event> myList = new ArrayList<Event>();
 		    	Event blankEvent = new Event();
-		    	blankEvent.setEventName("Nothing FOund");
-		    	blankEvent.setEventLocation("NOTHING!");
+		    	blankEvent.setEventName("Nothing Found");
+		    	blankEvent.setEventLocation("");
 		    	myList.add(blankEvent);
 				listAdapter = new EventListAdapter(collection.getContext(), myList);		   
 		    }
 		    //Get the noteList by id.
-            noteList = (ListView) view.findViewById(R.id.notes_list);
-			noteList.setAdapter(listAdapter);
+		    eventList = (ListView) view.findViewById(R.id.notes_list);
+		    eventList.setAdapter(listAdapter);
+		    eventList.setOnItemClickListener((OnItemClickListener) this);
 			listAdapter.notifyDataSetChanged();
         }
 
        ((ViewPager) collection).addView(view, 0);        
         return view;
     }
+	
+	public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
+		Event event = (Event) eventList.getItemAtPosition(position);
+		//DEBUG Toast.makeText(view.getContext(), position + " " + note.getId() + " " + note.getNoteTitle(), Toast.LENGTH_SHORT).show();
+		//Make a new dialog
+		DialogFragment newDialog = new eventListDialog(event);
+		newDialog.show(TeamRubicon.getInstance().getFragmentManager(), "Edit Note");
+		
+	}
 	
 	@Override
 	public float getPageWidth(int position){

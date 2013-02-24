@@ -1,7 +1,11 @@
 package org.teamrubiconusa.teamrubicon;
 
+import java.util.List;
+
 import org.teamrubiconusa.teamrubicon.REST.RESTfulRequest;
+import org.teamrubiconusa.teamrubicon.dao.InactiveDao;
 import org.teamrubiconusa.teamrubicon.dao.PersonDao;
+import org.teamrubiconusa.teamrubicon.model.Inactive;
 
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -20,12 +24,15 @@ public class TeamRubicon extends FragmentActivity {
     private ProgressBar progressBar;
     private RESTfulRequest myRequest;
     
+    public static TeamRubicon thisInstance;
+    
     private ActionBar actionBar;
     
     private static String URL = "http://54.235.71.143/htm/rest_home.php/event.xml";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		thisInstance = this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_team_rubicon);
 
@@ -54,6 +61,9 @@ public class TeamRubicon extends FragmentActivity {
 		myRequest.execute(URL);
 		
 		
+		List<Inactive> value = InactiveDao.getInstance().getAllInactives();
+		value.get(0).getItem();
+		
 				
 	}
 
@@ -62,6 +72,10 @@ public class TeamRubicon extends FragmentActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.team_rubicon, menu);
 		return true;
+	}
+	
+	public static TeamRubicon getInstance(){
+		return thisInstance;
 	}
 	
 
